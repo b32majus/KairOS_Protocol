@@ -1,4 +1,4 @@
-# Protocolos de trabajo
+# KairOS_Protocol — protocolos de trabajo
 
 Este repositorio reúne tres protocolos complementarios para trabajar con agentes de IA sobre código: **DIA**, **Metis** y **Atenea**.
 
@@ -10,7 +10,7 @@ Cada protocolo tiene sus propias reglas, fases, modelos y criterios de cierre. L
 | --- | --- | --- |
 | Tarea pequeña o mediana, atendida (Sil presente), bien entendida, en un solo repo. | **DIA** — Diseñar · Implementar · Auditar | `dia/README.md` |
 | Funcionalidad grande o de riesgo, desatendida hasta el PR, con oráculos demostrados. | **Metis** | `metis/README.md` |
-| El flujo actual sobre OpenCode V2 + skills de Matt Pocock (C-087). | **Atenea** | `AGENTS.md`, `README.md`, `docs/` |
+| El flujo actual sobre OpenCode V2 + skills de Matt Pocock (C-087). | **Atenea** | `atenea/AGENTS.md`, `atenea/README.md`; sus documentos siguen en `docs/`, `tools/` y `.opencode/` |
 
 En la práctica:
 
@@ -20,6 +20,9 @@ En la práctica:
 
 Un mismo proyecto puede usar los tres a lo largo del tiempo. Lo importante es no mezclar sus reglas dentro de una misma ejecución.
 
-## Fase 2
+## Dónde vive cada cosa
 
-En una fase posterior el repo podrá renombrarse y Atenea moverse a `atenea/`. Hoy sus rutas no cambian: `AGENTS.md`, `README.md` y `docs/` siguen en la raíz.
+- `dia/`: protocolo DIA.
+- `metis/`: resumen de Metis; el código está en su propio repo.
+- `atenea/`: reglas y README de Atenea. Sus documentos (`docs/`), comprobadores (`tools/`) y agentes (`.opencode/`) siguen en la raíz para no romper las rutas que usan los proyectos y las Coras.
+- La ruta antigua `/srv/kairos-lab/Atenea` sigue funcionando como enlace al repo.
