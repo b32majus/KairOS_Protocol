@@ -1,5 +1,7 @@
 # Atenea
 
+Este repo contiene varios protocolos de trabajo (ver PROTOCOLOS.md). Lo que sigue rige únicamente el protocolo Atenea; DIA y Metis tienen sus reglas en `dia/` y `metis/`.
+
 Atenea is a thin upstream-first policy, routing and conformance layer for autonomous engineering work.
 
 Current execution authority: **C-087 — C-086 thin native execution plus Cora pre-execution hardening, child-readable authority transport and read-only run telemetry**.

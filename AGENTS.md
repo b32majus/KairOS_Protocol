@@ -1,5 +1,7 @@
 # Atenea — Repository Policy
 
+Este repo contiene varios protocolos de trabajo (ver PROTOCOLOS.md). Lo que sigue rige únicamente el protocolo Atenea; DIA y Metis tienen sus reglas en `dia/` y `metis/`.
+
 Status: **CURRENT AUTHORITY — C-087**
 
 Atenea is a thin upstream-first policy, routing and conformance layer over native OpenCode V2 and adopted upstream engineering skills. It does not duplicate those skills or implement a second execution/review lifecycle.
