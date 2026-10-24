@@ -4,6 +4,8 @@ Este repositorio reúne tres protocolos complementarios para trabajar con agente
 
 Cada protocolo tiene sus propias reglas, fases, modelos y criterios de cierre. Las reglas de uno **no obligan** a los demás: cada trabajo se ejecuta bajo un protocolo concreto y responde a su documento de referencia.
 
+Para arrancar cualquier trabajo, empieza por `ARRANQUE.md`: resume las reglas comunes y cómo elegir protocolo.
+
 ## Cuándo usar cada uno
 
 | Situación | Protocolo | Dónde están sus reglas |
@@ -22,6 +24,7 @@ Un mismo proyecto puede usar los tres a lo largo del tiempo. Lo importante es no
 
 ## Dónde vive cada cosa
 
+- `ARRANQUE.md`: prompt de arranque común para cualquier agente.
 - `dia/`: protocolo DIA.
 - `metis/`: resumen de Metis; el código está en su propio repo.
 - `atenea/`: reglas y README de Atenea. Sus documentos (`docs/`), comprobadores (`tools/`) y agentes (`.opencode/`) siguen en la raíz para no romper las rutas que usan los proyectos y las Coras.

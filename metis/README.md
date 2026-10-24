@@ -3,7 +3,7 @@
 Metis es un **arnés ligero para trabajo desatendido**: un orquestador determinista, un writer, un gate determinista y un evaluador. El orquestador no improvisa: ejecuta fases definidas y deja evidencia en disco.
 
 - Código y documentación técnica: `/srv/kairos-lab/qualification/metis-c091-20261019`.
-- Versión congelada en uso: `/srv/kairos-lab/qualification/metis-pilot-9.1` (`node .../bin/metis.mjs`).
+- Versión congelada en uso: `/srv/kairos-lab/qualification/metis-pilot-9.4` (`node .../bin/metis.mjs`). Los configs con `portPolicy` solo cargan en 9.4 o posteriores.
 
 ## Flujo largo (una funcionalidad, varias unidades)
 
@@ -19,6 +19,14 @@ La comprobación del paso 3 es la que da valor al conjunto: si el oráculo no fa
 ## Camino corto (un solo ticket)
 
 Para un único ticket bien delimitado: **`prep` + `run`**. Se prepara el ticket y su oráculo, se comprueba contra la referencia y se ejecuta la unidad sin pasar por `plan-units`.
+
+## Cuando algo falla: arreglos acotados
+
+Un cambio concreto no justifica repetir el protocolo entero.
+
+- **Oráculos incompletos tras la auditoría de la preparación**: se corrigen las aserciones en una rama nueva de prep, se pasa `metis prep-check` solo a esa unidad (debe fallar en BASE y pasar 3/3 con la referencia) y se lanza el train. Sin autor, sin plan y sin `prep-train` nuevo.
+- **Unidad parada por infraestructura** (evaluador caído, gate de reanudación fallido): `metis train-resume`. Reanuda el mismo run sobre el mismo candidato; el writer no vuelve a ejecutarse.
+- **Puerto ocupado por otro proyecto**: con `"portPolicy": "free"` en el `--repo-config`, la receta visual pasa a un puerto libre y el ocupante queda en el informe. Nunca se mata un proceso ajeno.
 
 ## Modelos
 
