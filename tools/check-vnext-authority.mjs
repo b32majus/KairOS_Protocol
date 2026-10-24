@@ -27,7 +27,7 @@ const forbid = (rel, token, label) => {
 // full policy prose: C-087 checks machine-decidable structure/coherence and lets
 // preparation/runtime contracts evolve without forcing duplication into hot-path files.
 const required = [
-  'README.md', 'AGENTS.md', 'CODING_STANDARDS.md', 'CONTEXT.md', 'GLOSSARY.md',
+  'README.md', 'AGENTS.md', 'atenea/README.md', 'atenea/AGENTS.md', 'PROTOCOLOS.md', 'CODING_STANDARDS.md', 'CONTEXT.md', 'GLOSSARY.md',
   'docs/START_HERE.md', 'docs/CURRENT_DECISIONS.md',
   'docs/CURRENT_EXECUTION_DECISION_C087.md',
   'docs/CURRENT_EXECUTION_DECISION_C086.md',
@@ -55,8 +55,9 @@ const required = [
 for (const rel of required) read(rel);
 
 // Current-decision coherence.
-req('README.md', 'C-087', 'README current decision');
-req('AGENTS.md', 'CURRENT AUTHORITY — C-087', 'AGENTS current authority');
+req('atenea/README.md', 'C-087', 'README current decision');
+req('AGENTS.md', 'atenea/AGENTS.md', 'root AGENTS routes to the Atenea protocol');
+req('atenea/AGENTS.md', 'CURRENT AUTHORITY — C-087', 'AGENTS current authority');
 req('docs/START_HERE.md', 'CURRENT FRONT DOOR — C-087', 'front door');
 req('docs/EXECUTION_REQUEST_AND_PREFLIGHT_V1.md', 'CURRENT EXECUTION ENTRY CONTRACT — C-087', 'preflight current decision');
 req('docs/PRE_EXECUTION_HARDENING_V1.md', 'CURRENT CORA PREPARATION CONTRACT — C-087', 'Cora hardening current decision');
@@ -76,7 +77,7 @@ req('docs/ATENEA_FREE_PROFILE_V0.md', 'CURRENT COST-POLICY PROFILE — C-087', '
 req('docs/ATENEA_GO_PROFILE_V0.md', 'CURRENT C-087 GO PROFILE', 'Go profile current decision');
 
 // Thin-path structural markers: keep these few and stable; do not checksum prose.
-req('AGENTS.md', 'Do not duplicate Matt', 'upstream method ownership');
+req('atenea/AGENTS.md', 'Do not duplicate Matt', 'upstream method ownership');
 req('docs/EXECUTION_REQUEST_AND_PREFLIGHT_V1.md', 'Conditional safeguards:', 'conditional safeguard routing field');
 req('docs/EXECUTION_REQUEST_AND_PREFLIGHT_V1.md', 'Delegation to implementation worker', 'delegation contract');
 req('docs/PRE_EXECUTION_HARDENING_V1.md', 'deliver Silvia the exact bash + visible agent + prompt', 'human launch boundary');
@@ -85,7 +86,7 @@ req('docs/CHILD_AUTHORITY_CAPSULE_V1.md', 'INCOMPLETE_AUTHORITY', 'fail-closed c
 req('docs/CHILD_AUTHORITY_CAPSULE_V1.md', '/srv/.../outbox/...', 'external-path prohibition');
 req('tools/opencode-run-telemetry.mjs', 'readOnly: true', 'read-only telemetry DB open');
 req('tools/opencode-run-telemetry.mjs', 'max_prompt_context_proxy', 'context proxy telemetry');
-forbid('AGENTS.md', 'PRE_EXECUTION_HARDENING_V1.md', 'Cora-side hardening leaked into runtime policy');
+forbid('atenea/AGENTS.md', 'PRE_EXECUTION_HARDENING_V1.md', 'Cora-side hardening leaked into runtime policy');
 req('docs/START_HERE.md', 'Broad/full suites are not a per-slice default', 'evidence phase ownership');
 req('docs/PRODUCT_FIDELITY_GATES_V1.md', 'Invocation and phase ownership', 'conditional fidelity ownership');
 
@@ -216,7 +217,7 @@ req('tools/check-free-models.mjs', "'opencode/nemotron-3.5-super-vl-free'", 'vis
 
 
 // V1 execution markers may remain in historical docs, never in current front-door surfaces.
-for (const rel of ['README.md','AGENTS.md','CONTEXT.md','docs/START_HERE.md','docs/ATENEA_HARNESS_CONTRACT_V1.md','docs/OPERATOR_RUNBOOK_V1.md','docs/vnext/CURRENT_COMPATIBILITY.md']) {
+for (const rel of ['README.md','AGENTS.md','atenea/README.md','atenea/AGENTS.md','CONTEXT.md','docs/START_HERE.md','docs/ATENEA_HARNESS_CONTRACT_V1.md','docs/OPERATOR_RUNBOOK_V1.md','docs/vnext/CURRENT_COMPATIBILITY.md']) {
   forbid(rel, 'opencode --pure', 'V1 pure launch as current authority');
 }
 

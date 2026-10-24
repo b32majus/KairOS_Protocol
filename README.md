@@ -1,49 +1,11 @@
-# Atenea
+# KairOS_Protocol
 
-Atenea is a thin upstream-first policy, routing and conformance layer for autonomous engineering work.
+Protocolos de trabajo con agentes de IA sobre código: **DIA**, **Metis** y **Atenea**.
 
-Current execution authority: **C-087 — C-086 thin native execution plus Cora pre-execution hardening, child-readable authority transport and read-only run telemetry**.
+Empieza por `PROTOCOLOS.md`: qué protocolo usar en cada caso y dónde están sus reglas.
 
-```text
-accepted issue/spec
-→ existing Herdr workspace/pane for persistent operation
-→ visible native OpenCode V2 TUI (`opencode .`)
-→ selected Atenea profile
-→ Matt /implement or /implement-spec
-→ role-bound subagents
-→ deterministic checks/oracles
-→ one coordinator-owned Standards + Spec review
-→ up to two fresh finding-scoped corrections if needed
-→ material composed-state closeout
-→ Cora integrated audit when warranted
-→ human publication/merge
-→ post-merge cleanup
-```
-
-## Start here
-
-Read:
-
-1. `AGENTS.md`;
-2. `docs/START_HERE.md`;
-3. `CODING_STANDARDS.md`;
-4. `CONTEXT.md`;
-5. the current issue/spec/ADR authority.
-
-Routing and agent bindings: `docs/ATENEA_EXECUTION_ROUTING_V0.md` and project-local `.opencode/agents/`.
-
-## What Atenea does not own
-
-Atenea does not fork Matt's TDD/task-graph/review methodology and does not rebuild an LLM execution/review lifecycle. Material product shaping is deliberately outside unattended execution: Cora + human close product decisions before launch, and OpenCode STOPs on newly discovered material product questions instead of answering them itself. `docs/ATTENDED_PRODUCT_SHAPING_GUARDRAILS_V1.md` constrains expansive shaping; `docs/PRODUCT_FIDELITY_GATES_V1.md` prevents internal domain/ticket decomposition and local hardening from silently becoming an over-complex composed UI. Historical Gentle/Pi/RDD/4R/lineage/burn material remains provenance only.
-
-## Operator surface
-
-Herdr remains supported for persistent sessions, observation and operator convenience. A project must remain semantically correct without hidden Herdr-specific authority.
-
-## Publication
-
-Review is evidence, not merge authority. Publication remains target-repository + explicit human authority. Delivery worktrees are normally cleaned after accepted merge, not merely after PR creation.
-
-### Atenea Free
-
-C-084 also supports the optional `free_only` cost policy through `atenea-free`. Cost policy is human/project authority and is independent from the `volume|complex` risk class. See `docs/ATENEA_FREE_PROFILE_V0.md` and the replaceable `docs/ATENEA_FREE_MODEL_CATALOG_V0.md`.
+| Protocolo | Para qué | Reglas |
+| --- | --- | --- |
+| DIA | tarea pequeña o mediana, atendida | `dia/README.md` |
+| Metis | funcionalidad grande o de riesgo, desatendida hasta PR | `metis/README.md` |
+| Atenea | flujo sobre OpenCode V2 (C-087) | `atenea/README.md`, `atenea/AGENTS.md` |
