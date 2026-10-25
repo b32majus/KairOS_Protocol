@@ -3,7 +3,7 @@
 Metis es un **arnés ligero para trabajo desatendido**: un orquestador determinista, un writer, un gate determinista y un evaluador. El orquestador no improvisa: ejecuta fases definidas y deja evidencia en disco.
 
 - Código y documentación técnica: `/srv/kairos-lab/qualification/metis-c091-20261019`.
-- Versión congelada en uso: `/srv/kairos-lab/qualification/metis-pilot-9.6` (`node .../bin/metis.mjs`). Los configs con `portPolicy` solo cargan en 9.4 o posteriores.
+- Versión congelada en uso: `/srv/kairos-lab/qualification/metis-pilot-9.7` (`node .../bin/metis.mjs`). Los configs con `portPolicy` solo cargan en 9.4 o posteriores.
 
 ## Flujo largo (una funcionalidad, varias unidades)
 
@@ -28,7 +28,7 @@ Un cambio concreto no justifica repetir el protocolo entero.
 
 - **Oráculos incompletos tras la auditoría de la preparación**: se corrigen las aserciones en una rama nueva de prep, se pasa `metis prep-check` solo a esa unidad (debe fallar en BASE y pasar 3/3 con la referencia) y se lanza el train. Sin autor, sin plan y sin `prep-train` nuevo.
 - **Unidad parada por infraestructura** (evaluador caído, gate de reanudación fallido): `metis train-resume`. Reanuda el mismo run sobre el mismo candidato; el writer no vuelve a ejecutarse.
-- **Oráculo que ya no encaja con el código real (`ORACLE_DRIFT`)**: en un train, cada unidad se prepara sobre las referencias de las anteriores, pero se ejecuta sobre lo que escribieron los writers. Con `--prep-dir <directorio del prep-train>` en `train` o `train-resume`, Metis repite el `prep-check` de la unidad k sobre el código real antes de gastar su writer; si no pasa, para con `ORACLE_DRIFT`. Arreglo: corregir solo el oráculo y la referencia de esa unidad sobre ese código, `prep-check` y reanudar.
+- **Oráculo que ya no encaja con el código real (`ORACLE_DRIFT`)**: en un train, cada unidad se prepara sobre las referencias de las anteriores, pero se ejecuta sobre lo que escribieron los writers. Con `--prep-dir <directorio del prep-train>` en `train` o `train-resume`, Metis comprueba de nuevo la preparación de la unidad k sobre el código real antes de gastar su writer; si no pasa, para con `ORACLE_DRIFT`. Desde 9.7 ese recheck corre solo los oráculos de la unidad, sin suite, build ni capturas: eso lo sigue mirando el gate del writer. Arreglo: corregir solo el oráculo y la referencia de esa unidad sobre ese código, `prep-check` y reanudar.
 - **Defecto visual que ya estaba en BASE**: no falla la unidad; queda como aviso «preexistente».
 - **Oráculo de un trabajo anterior que el issue deja obsoleto a propósito**: el ticket lo lista en `supersedes` y la preparación lo actualiza al contrato nuevo (y lo ejecuta como testigo) o lo borra. Sin declararlo, Metis no deja tocar un oráculo existente. Dentro de un mismo train no se puede: si una unidad contradice a otra anterior, se cambia el plan. Sustituye a las WO manuales de «alineación de oráculos».
 - **El cambio rompe a propósito un test existente**: ese test entra en `allowedPaths` del ticket, aunque esté fuera del plan, y el ticket explica por qué cambia. Queda como aviso para la auditoría.
