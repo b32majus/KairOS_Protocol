@@ -10,12 +10,14 @@ Para arrancar cualquier trabajo, empieza por `ARRANQUE.md`: resume las reglas co
 
 | Situación | Protocolo | Dónde están sus reglas |
 | --- | --- | --- |
+| Arreglo mínimo y acotado: 1–2 archivos, sin diseño que acordar y fuera de áreas de riesgo. | **Directo** (sin protocolo) | `ARRANQUE.md` §2 |
 | Tarea pequeña o mediana, atendida (Sil presente), bien entendida, en un solo repo. | **DIA** — Diseñar · Implementar · Auditar | `dia/README.md` |
 | Funcionalidad grande o de riesgo, desatendida hasta el PR, con oráculos demostrados. | **Metis** | `metis/README.md` |
 | El flujo actual sobre OpenCode V2 + skills de Matt Pocock (C-087). | **Atenea** | `atenea/AGENTS.md`, `atenea/README.md`; sus documentos siguen en `docs/`, `tools/` y `.opencode/` |
 
 En la práctica:
 
+- Si cabe en una frase, toca 1–2 archivos y no hay nada que decidir (una errata, un texto, un import, un test roto por un cambio evidente), se hace **directo**.
 - Si la tarea se puede explicar en un documento corto y alguien puede atenderla mientras se ejecuta, es **DIA**.
 - Si el trabajo no se puede atender, dura horas o toca áreas de riesgo, es **Metis**.
 - Si el trabajo va por OpenCode V2 con los agentes y perfiles de este repo, es **Atenea**.

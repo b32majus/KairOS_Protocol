@@ -56,3 +56,14 @@ Tareas pequeñas o atendidas → **DIA** (`dia/README.md`). Metis tiene sentido 
 ## Regla de auditoría
 
 **Nunca leer `reference.patch` en auditorías.** La referencia privada existe para demostrar que el oráculo discrimina, no para guiar la revisión: si el auditor la lee, deja de evaluar el resultado con criterios independientes.
+
+## Revisión: una vez y basta (obligatorio)
+
+En los runs reales, las comprobaciones de Metis se llevan menos del 20 % del tiempo; lo que más frena son las rondas de revisión alrededor. Estas reglas no son opcionales:
+
+- **Una sola auditoría por preparación**, hecha por Cora, con veredicto **OK** o **REHACER**. Nada de segundas revisiones, revisiones cruzadas, enmiendas ni dictámenes sobre la misma preparación.
+- **REHACER** lista solo defectos concretos (unidad, archivo, qué falla). Se arreglan por la vía acotada y **decide `prep-check`**, no otra auditoría completa.
+- **No se crean documentos de revisión** (WO, ENMIENDA, REVISION, DICTAMEN, DECISIONES) salvo que Sil los pida. Una decisión de Sil es una línea en el `HANDOFF.md` del trabajo.
+- **No se pide a Claude ni a otro agente** que revise algo ya auditado, salvo que Sil lo pida.
+- **Testigos solo nuevos**: un ticket no lista como testigo tests que ya ejecuta la suite del proyecto (`pnpm test`, `verify:*`); la suite ya corre en el gate.
+- Si dudas entre revisar otra vez o lanzar, lanza: el gate, el evaluador y el merge humano siguen ahí.

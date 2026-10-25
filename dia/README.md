@@ -42,6 +42,13 @@ El resultado es **OK** o **REHACER con el motivo exacto**. Se comprueba:
 
 Tras **dos REHACER seguidos de la misma tarea**: parar y avisar a Sil. Puede que la tarea necesite Metis o un modelo mejor.
 
+## Revisión: una vez y basta (obligatorio)
+
+- **Una sola auditoría por entrega**, con veredicto OK o REHACER. Nada de segundas revisiones, revisiones cruzadas ni enmiendas sobre la misma entrega.
+- **REHACER** lista solo defectos concretos (archivo y qué falla). Tras el arreglo se comprueban **esos defectos**, no se repite la auditoría entera.
+- **No se crean documentos de revisión** (WO, ENMIENDA, REVISION, DICTAMEN, DECISIONES) salvo que Sil los pida. Una decisión de Sil es una línea en el `ESTADO.md` o el `HANDOFF.md`.
+- **No se pide a otro agente** que revise algo ya auditado, salvo que Sil lo pida.
+
 ## Modelos
 
 Perfil `nan-reparto` de gentle-pi (2026-10-24):
