@@ -15,9 +15,9 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
   - *Implementar*: Pi con ODD y modelos de NaN, en una rama y un worktree propios, dejando un `ESTADO.md`.
   - *Auditar*: quien **no** implementó, con la lista de `dia/README.md`. Veredicto OK o REHACER.
 - **Metis** (`metis/README.md`): trabajo grande o de riesgo, desatendido hasta el PR.
-  - Versión en uso: `/srv/kairos-lab/qualification/metis-pilot-9.4`.
+  - Versión en uso: `/srv/kairos-lab/qualification/metis-pilot-9.5`.
   - Flujo: `plan-units` → `prep-train` → auditoría de la preparación → `train` → PR_READY → merge humano. Camino corto: `prep` + `run`.
-  - Si algo falla, se aplica un arreglo acotado (`prep-check` de una unidad, `train-resume`, `portPolicy`), nunca el protocolo entero: ver «Cuando algo falla» en `metis/README.md`.
+  - Si algo falla, se aplica un arreglo acotado (`prep-check` de una unidad, `train-resume`, `--prep-dir`, `portPolicy`), nunca el protocolo entero: ver «Cuando algo falla» en `metis/README.md`.
 - **Atenea** (`atenea/AGENTS.md`, `atenea/README.md`): el flujo de OpenCode V2 con skills (C-087). Sus documentos siguen en `docs/`, `tools/` y `.opencode/`.
 
 ## 3. Reglas que valen siempre
