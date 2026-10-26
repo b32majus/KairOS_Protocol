@@ -26,7 +26,7 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 
 - La implementación va en una rama propia creada desde la rama de trabajo del proyecto; nunca directamente sobre ramas protegidas.
 - Sin push ni PR sin GO de Sil.
-- Se respetan el `AGENTS.md` y las restricciones del proyecto destino.
+- Se respetan el `AGENTS.md`, el `CODING_STANDARDS.md` (si existe) y las restricciones del proyecto destino.
 - Datos sintéticos: no se usan datos reales de personas ni de clientes.
 
 ## Lista de auditoría
@@ -37,6 +37,7 @@ El resultado es **OK** o **REHACER con el motivo exacto**. Se comprueba:
 - los tests pasan (mirar la cola de la salida, no solo el resumen);
 - `git diff --stat` solo toca lo que el alcance permite;
 - se revisan 2–3 puntos delicados del diff;
+- no hay código duplicado, abstracciones que nadie pidió ni comportamiento fuera de los criterios (son los olores «Duplicated Code» y «Speculative Generality» de `.agents/skills/code-review/SKILL.md`, más el «scope creep» de su eje Spec);
 - no hay nada fuera de alcance ni fuera de las restricciones del proyecto;
 - `ESTADO.md` coincide con el diff.
 

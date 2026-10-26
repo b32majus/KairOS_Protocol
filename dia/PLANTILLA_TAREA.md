@@ -23,6 +23,7 @@
 - <Ficheros, módulos o áreas que sí entran.>
 - No tocar: <zonas fuera de alcance, dependencias, configuración, otros repos>.
 - Restricciones del proyecto: <las que apliquen del AGENTS.md del repo destino>.
+- Normas de código: el `CODING_STANDARDS.md` del repo destino, si existe.
 
 ## Criterios de aceptación
 
