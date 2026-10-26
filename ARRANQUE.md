@@ -19,6 +19,8 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
   - *Implementar*: Pi con ODD y modelos de NaN, en una rama y un worktree propios, dejando un `ESTADO.md`.
   - *Auditar*: quien **no** implementó, con la lista de `dia/README.md`. Veredicto OK o REHACER.
 - **Metis** (`metis/README.md`): trabajo grande o de riesgo, desatendido hasta el PR.
+  - Se elige la vía al empezar: si una unidad no merece una referencia privada, tampoco merece Metis y va por DIA.
+  - Unidades verticales: cada una lleva dominio, pantalla y test de recorrido juntos, no microreglas sueltas.
   - Versión en uso: `/srv/kairos-lab/qualification/metis-pilot-9.9`. Usa siempre `--prep-dir` en `train` y `train-resume`.
   - Flujo: `plan-units` → `prep-train` → auditoría de la preparación → `train` → PR_READY → merge humano. Camino corto: `prep` + `run`.
   - Si algo falla, se aplica un arreglo acotado (`prep-check` de una unidad, `train-resume`, `--prep-dir`, `portPolicy`, `supersedes`), nunca el protocolo entero: ver «Cuando algo falla» en `metis/README.md`.

@@ -8,7 +8,7 @@ Metis es un **arnés ligero para trabajo desatendido**: un orquestador determini
 ## Flujo largo (una funcionalidad, varias unidades)
 
 1. **Issue aprobado**, redactado con Cora.
-2. **`plan-units`**: se parte el issue en unidades y se aprueba el plan.
+2. **`plan-units`**: se parte el issue en unidades y se aprueba el plan. Las unidades son **verticales**: cada una lleva dominio, pantalla y test de recorrido juntos, no microreglas sueltas. Menos unidades, menos preparaciones.
 3. **`prep-train`**: por unidad, el autor escribe el ticket, el oráculo y una referencia privada. Metis comprueba que el oráculo **falla en BASE** y **pasa 3/3 con la referencia**.
 4. **Auditoría de la preparación por Cora**: aprobación antes de gastar writer.
 5. **`train`**: el writer barato implementa; el gate y el evaluador deciden; hay correcciones acotadas.
@@ -54,6 +54,8 @@ El evaluador lee el `CODING_STANDARDS.md` del proyecto (`instructions` en el `--
 ## Cuándo no usar Metis
 
 Tareas pequeñas o atendidas → **DIA** (`dia/README.md`). Metis tiene sentido cuando el trabajo no se puede atender, dura horas o toca áreas de riesgo y merece oráculos demostrados antes de escribir código.
+
+La vía se elige al empezar: si una unidad no merece una referencia privada, tampoco merece Metis y va por DIA.
 
 ## Regla de auditoría
 
