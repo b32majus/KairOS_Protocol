@@ -65,7 +65,7 @@ Perfil `nan-reparto` de gentle-pi (2026-10-24):
 
 Cada modelo de NaN tiene cuota mensual propia: deepseek 3B, glm5.3-flash 2B, mimo 1B, qwen3.8-flash 500M; gemma4 y qwen3.6 no tienen límite.
 
-La fuente de verdad es `~/.pi/gentle-ai/models.json`. Se cambia con `/gentle:models` dentro de Pi, no editando los `.md` de agentes.
+La fuente de verdad es `~/.pi/gentle-ai/models.json`. Se cambia con `/gentle:profiles` dentro de Pi (desde gentle-pi 4.5; `/gentle:models` ya no existe), no editando los `.md` de agentes.
 
 ## GGA
 
