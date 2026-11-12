@@ -13,7 +13,9 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
 - **Directo** (sin protocolo): para arreglos mínimos que no necesitan ni DIA ni Metis.
   - Vale si cumple todo: cabe en una frase, toca 1–2 archivos, no hay comportamiento que acordar y no toca áreas de riesgo (datos clínicos, permisos, migraciones, pagos, envíos a terceros).
   - Se hace en una rama propia, se pasan los tests del proyecto y se hace commit sin push. Sin documento de tarea ni auditoría: el diff y la salida de los tests bastan para Sil.
+  - Si cambia algo que ve el usuario, debe haber un test (existente o nuevo de pocas líneas) que lo cubra. Si no lo hay y no cabe en pocas líneas, es DIA.
   - Si al empezar crece (más archivos, dudas de diseño, tests nuevos de verdad), se para y pasa a DIA.
+  - Contra el abuso: cada directo se anota en el registro de calidad (§6), y en la duda entre directo y DIA, es DIA.
 - **DIA** (`dia/README.md`): trabajo atendido, pequeño o mediano, en un solo repo.
   - *Diseñar*: Cora o Claude redactan con Sil un documento de tarea (`dia/PLANTILLA_TAREA.md`) de una página como máximo, con 5 a 10 criterios.
   - *Implementar*: con modelos de NaN, en una rama y un worktree propios, por una de dos vías: Pi con ODD (deja un `ESTADO.md`) u OpenCode directo con un encargo estricto (`dia/OPENCODE.md`). La vía la elige el modelo que lidera el proyecto con Sil, según la tarea (`dia/README.md`, «Elegir la vía»).
@@ -33,7 +35,7 @@ El cuello de botella no son los tests de Metis, sino las rondas de revisión alr
 - **Una sola auditoría por preparación**, hecha por Cora, con veredicto **OK** o **REHACER**. Nada de segundas revisiones, revisiones cruzadas, enmiendas ni dictámenes sobre la misma preparación.
 - **REHACER** lista solo defectos concretos (unidad, archivo, qué falla). Se arreglan por la vía acotada y **decide `prep-check`**, no otra auditoría completa.
 - **No se crean documentos de revisión** (WO, ENMIENDA, REVISION, DICTAMEN, DECISIONES) salvo que Sil los pida. Una decisión de Sil es una línea en el `HANDOFF.md` del trabajo.
-- **No se pide a Claude ni a otro agente** que revise algo ya auditado, salvo que Sil lo pida.
+- **No se pide a Claude ni a otro agente** que revise algo ya auditado, salvo que Sil lo pida. Excepción fija: en DIA, el segundo revisor de las tareas M o sensibles forma parte de la única auditoría (`dia/README.md`, «Segundo revisor»).
 - **Testigos solo nuevos**: un ticket no lista como testigo tests que ya ejecuta la suite del proyecto (`pnpm test`, `verify:*`). La suite ya corre en el gate.
 - Si dudas entre revisar otra vez o lanzar, lanza: el gate, el evaluador y el merge humano siguen ahí.
 
@@ -54,7 +56,7 @@ El cuello de botella no son los tests de Metis, sino las rondas de revisión alr
 
 Si el trabajo continúa uno anterior, antes de responder lee el bloque «EMPEZAR AQUÍ» del `HANDOFF.md` y contrástalo con GitHub y el repo: `gh pr list`, `gh issue list`, `git worktree list` y el `git log` del worktree citado. Lo que diga GitHub manda sobre el HANDOFF.
 
-Responde en 5 líneas como máximo: proyecto · tarea · protocolo elegido (y vía, si es DIA) y por qué · primer paso · qué necesitas de Sil.
+Responde en 5 líneas como máximo: proyecto · tarea · protocolo elegido (y vía, tamaño S/M y si es sensible, si es DIA) y por qué · primer paso · qué necesitas de Sil.
 
 ## 6. Al terminar cada implementación
 
@@ -66,3 +68,13 @@ Cuando acabe un trabajo (PR_READY, OK de DIA o una parada), **antes de proponer 
 4. Qué necesitas de Sil.
 
 Y deja el estado para la siguiente sesión: reescribe el bloque «EMPEZAR AQUÍ» del `HANDOFF.md` (≤25 líneas: estado, decisiones, próximo paso) y mueve lo viejo a `HANDOFF_HISTORICO_<fecha>.md`. Un tramo es una sesión.
+
+### Registro de calidad
+
+Cada proyecto tiene un `CALIDAD.md` junto a su `HANDOFF.md`. Al cerrar cada trabajo (también los directos) se añade una línea:
+
+`fecha · tarea · protocolo/vía · S/M/sensible · modelo · nº de REHACER · hallazgos confirmados del segundo revisor · enlace a la PR`
+
+Y cuando aparezca después un fallo en algo ya mezclado, o se revierta: `fecha · ESCAPADO o REVERT · qué falló · tarea de origen · qué lo habría detectado`.
+
+Una vez al mes, quien lidera el proyecto lo resume a Sil en 3 líneas: fallos escapados, reverts y si algún tipo de tarea o modelo da más problemas. Si los escapados suben, se endurece el protocolo de ese tipo de tarea (pasar de S a M, añadir una regla de CI).

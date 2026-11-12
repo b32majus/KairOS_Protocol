@@ -73,6 +73,15 @@ Se aplica la lista de auditoría de `dia/README.md`. Además:
 - los fallos sospechosos de ser previos se comprueban contra HEAD en un worktree temporal propio, nunca con `stash`, `checkout` ni `reset` en el worktree del implementador;
 - los arreglos de pocas líneas tras la auditoría (un test propio, quitar lógica añadida solo para pasar un test) los hace directamente quien audita, sin relanzar.
 
+En tareas M o sensibles se lanza además el segundo revisor (`dia/README.md`, «Segundo revisor»), antes de que el auditor dé el veredicto y sin pasarle la auditoría:
+
+```
+cd <worktree> && opencode run -m openai/gpt-6.1-sol "Eres REVISOR de solo lectura. PROHIBIDO editar ficheros, ejecutar git que modifique nada, instalar o delegar. Lee los criterios y el encargo de <ruta absoluta del encargo> y revisa el diff (git diff <rama base> y git status). Busca: criterios no cumplidos o sin test, lógica añadida solo para pasar un test, errores de lógica, casos límite, seguridad y datos. Responde en ≤15 líneas: un hallazgo por línea (fichero:línea · qué falla · gravedad alta/media/baja), o «sin hallazgos»." > <ruta ABSOLUTA del log> 2>&1
+```
+
+- Si el auditor es Cora o no hay OpenAI, se cambia `-m` por el modelo de NaN que no implementó.
+- Tras la revisión, `git status` del worktree debe seguir igual. Si cambió, se descarta su informe y se avisa a Sil.
+
 ## 6. Documentos mecánicos
 
 Contratos, filas de decisiones, descripción de la PR y similares pueden ir a NaN (`nan/mimo-v2.6-flash`, el más barato, o `nan/deepseek-v4-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.

@@ -32,12 +32,32 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 2. **Documento de tarea o encargo.**
    - Vía Pi: documento de tarea con `dia/PLANTILLA_TAREA.md`, fuera del repo si el diseñador no puede escribir en él. Por ejemplo: `/srv/kairos-lab/metis-runs/<proyecto>/odd/<tarea>.md`.
    - Vía OpenCode: test RED y encargo con la plantilla de `dia/OPENCODE.md`.
+   - **Tareas M o sensibles: Sil valida los criterios antes de lanzar** (ver «Tamaño y sensibilidad»). Quien diseña le escribe en 5–10 líneas, sin nada técnico, qué debe pasar y qué no debe pasar, como lo vería un usuario. Sil responde «sí», «falta esto» o «no es así». Se lanza solo con su «sí». Es la única comprobación de que se construye lo correcto: ni el test ni los revisores la sustituyen.
 3. **Línea base de checks.** Antes de lanzar, se pasan los checks vecinos sobre el worktree sin tocar. Los que ya fallan se quitan de la lista si fallan por el entorno, o se anotan como «ya fallan antes; no deben empeorar». Así se separan los fallos previos de los que mete el implementador.
 4. **Implementación.**
    - Vía Pi: `cd <repo>`, `pi`, y pedir `Implementa <ruta del documento>`. Sin interfaz: `pi -p "Implementa <ruta>"`. ODD explora, escribe el test, implementa y verifica en una rama y worktree propios, hace commit sin push y deja `<tarea>.ESTADO.md`.
    - Vía OpenCode: orden de lanzamiento de `dia/OPENCODE.md`, con el rol de implementador dentro de la propia orden.
-5. **Auditoría.** Se revisa el resultado con la lista de auditoría.
-6. **Publicar o mezclar.** Solo con GO de Sil; vale el GO en bloque de `ARRANQUE.md` §4.
+5. **Auditoría.** Se revisa el resultado con la lista de auditoría. En tareas M o sensibles incluye el segundo revisor (ver «Segundo revisor»).
+6. **Registro de calidad.** Una línea en el registro del proyecto (`ARRANQUE.md` §6).
+7. **Publicar o mezclar.** Solo con GO de Sil; vale el GO en bloque de `ARRANQUE.md` §4. Solo se mezcla con CI en verde.
+
+## Tamaño y sensibilidad
+
+- **S**: una funcionalidad o arreglo, ≤3 ficheros de código, sin datos sensibles.
+- **M**: el resto de DIA (varias funcionalidades, más ficheros o lógica con estados).
+- **Sensible**: toca datos clínicos o personales, permisos o autenticación, migraciones o borrados, pagos o envíos a terceros. Si además es grande o desatendido, va a Metis.
+- Se dice el tamaño y si es sensible en la primera respuesta (`ARRANQUE.md` §5). En la duda, se trata como M.
+
+## Segundo revisor (tareas M o sensibles)
+
+Forma parte de **la misma** auditoría, no es una ronda extra: sus hallazgos entran en el único veredicto OK o REHACER.
+
+- **Modelo de otra familia** que el implementador y que el auditor, para que no compartan puntos ciegos:
+  - por defecto `openai/gpt-6.1-sol` en OpenCode (suscripción de OpenAI, cuota fija, no gasta créditos de NaN);
+  - si el auditor es Cora (también OpenAI), o OpenAI no está disponible: el modelo de NaN que no implementó (`nan/glm5.3-flash` si implementó deepseek, y al revés).
+- **Ciego**: recibe los criterios, el encargo o documento de tarea y el diff. Nunca la auditoría ni las conclusiones de quien diseñó.
+- **Solo lectura**: no edita ni arregla. Orden de lanzamiento en `dia/OPENCODE.md` §5.
+- El auditor comprueba cada hallazgo en el código: los confirmados van al REHACER; los descartados se anotan en una línea con el motivo.
 
 ## Reglas
 
@@ -46,6 +66,8 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 - Se respetan el `AGENTS.md`, el `CODING_STANDARDS.md` (si existe) y las restricciones del proyecto destino.
 - Datos sintéticos: no se usan datos reales de personas ni de clientes.
 - En un worktree con trabajo del implementador nunca se hace `git stash`, `checkout` ni `reset`. Para comparar con HEAD se usa un worktree temporal propio.
+- **Guardarraíles ejecutables antes que reglas escritas** (`CODING_STANDARDS.md`, preámbulo y §7). Para llegar a producción, cada proyecto debe tener en CI, bloqueando el merge: lint, comprobación de tipos (si el lenguaje la tiene), su suite de tests y un escaneo de secretos. Si a un proyecto le falta alguno, es una tarea propia, no algo que se arregle de paso.
+- Si la auditoría encuentra un fallo que una regla de CI habría detectado, se propone añadir esa regla.
 
 ## Lista de auditoría
 
@@ -66,7 +88,7 @@ Tras **dos REHACER seguidos de la misma tarea**: parar y avisar a Sil. Puede que
 
 ## Revisión: una vez y basta (obligatorio)
 
-- **Una sola auditoría por entrega**, con veredicto OK o REHACER. Nada de segundas revisiones, revisiones cruzadas ni enmiendas sobre la misma entrega.
+- **Una sola auditoría por entrega**, con veredicto OK o REHACER. Nada de segundas revisiones, revisiones cruzadas ni enmiendas sobre la misma entrega. El segundo revisor de las tareas M o sensibles es parte de esa única auditoría, no una revisión aparte.
 - **REHACER** lista solo defectos concretos (archivo y qué falla). Tras el arreglo se comprueban **esos defectos**, no se repite la auditoría entera.
 - **No se crean documentos de revisión** (WO, ENMIENDA, REVISION, DICTAMEN, DECISIONES) salvo que Sil los pida. Una decisión de Sil es una línea en el `ESTADO.md` o el `HANDOFF.md`.
 - **No se pide a otro agente** que revise algo ya auditado, salvo que Sil lo pida.
