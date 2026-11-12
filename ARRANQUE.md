@@ -16,7 +16,7 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
   - Si al empezar crece (más archivos, dudas de diseño, tests nuevos de verdad), se para y pasa a DIA.
 - **DIA** (`dia/README.md`): trabajo atendido, pequeño o mediano, en un solo repo.
   - *Diseñar*: Cora o Claude redactan con Sil un documento de tarea (`dia/PLANTILLA_TAREA.md`) de una página como máximo, con 5 a 10 criterios.
-  - *Implementar*: Pi con ODD y modelos de NaN, en una rama y un worktree propios, dejando un `ESTADO.md`.
+  - *Implementar*: con modelos de NaN, en una rama y un worktree propios, por una de dos vías: Pi con ODD (deja un `ESTADO.md`) u OpenCode directo con un encargo estricto (`dia/OPENCODE.md`). La vía la elige el modelo que lidera el proyecto con Sil, según la tarea (`dia/README.md`, «Elegir la vía»).
   - *Auditar*: quien **no** implementó, con la lista de `dia/README.md`. Veredicto OK o REHACER.
 - **Metis** (`metis/README.md`): trabajo grande o de riesgo, desatendido hasta el PR.
   - Se elige la vía al empezar: si una unidad no merece una referencia privada, tampoco merece Metis y va por DIA.
@@ -40,16 +40,21 @@ El cuello de botella no son los tests de Metis, sino las rondas de revisión alr
 ## 4. Reglas que valen siempre
 
 - Sin GO explícito de Sil no se hace push, PR, merge ni deploy.
+  - **GO en bloque:** un GO de Sil a una propuesta concreta cubre, para ese trabajo, el push de su rama, el PR, los checks necesarios y el merge si CI está en verde y no hay conflictos.
+  - Siguen necesitando un GO propio: deploy, borrar ramas o worktrees, tags, releases, force-push, cambiar la rama por defecto y tocar el checkout de Sil.
+  - Las ramas protegidas y las restricciones de cada proyecto siguen mandando. En Metis, el GO en bloque solo cubre el merge si se da después de PR_READY.
 - Las auditorías son de solo lectura. Nunca se lee `reference.patch`.
 - Nada de datos reales de pacientes, credenciales ni secretos.
 - No mates procesos ni liberes puertos de otros proyectos: repórtalos.
 - Antes de afirmar qué hace un sistema, verifícalo en su código o en sus logs.
 - Arreglos acotados: un cambio concreto no justifica repetir un protocolo completo.
-- Ahorro de tokens: los modelos caros piensan, diseñan y auditan; los baratos implementan y escriben los tests.
+- Ahorro de tokens: los modelos caros piensan, diseñan y auditan; los baratos implementan. El test que hace de contrato lo escribe quien diseña (vía OpenCode) u ODD a partir de criterios verificables (vía Pi), y nunca lo audita quien lo escribió. Los baratos sí escriben bien checks de QA de solo lectura y documentos mecánicos.
 
 ## 5. Primera respuesta
 
-Responde en 5 líneas como máximo: proyecto · tarea · protocolo elegido y por qué · primer paso · qué necesitas de Sil.
+Si el trabajo continúa uno anterior, antes de responder lee el bloque «EMPEZAR AQUÍ» del `HANDOFF.md` y contrástalo con GitHub y el repo: `gh pr list`, `gh issue list`, `git worktree list` y el `git log` del worktree citado. Lo que diga GitHub manda sobre el HANDOFF.
+
+Responde en 5 líneas como máximo: proyecto · tarea · protocolo elegido (y vía, si es DIA) y por qué · primer paso · qué necesitas de Sil.
 
 ## 6. Al terminar cada implementación
 
@@ -59,3 +64,5 @@ Cuando acabe un trabajo (PR_READY, OK de DIA o una parada), **antes de proponer 
 2. Siguiente tarea, protocolo que le toca y por qué (según la tabla de `PROTOCOLOS.md`).
 3. Si algo falló: qué arreglo acotado aplica, citando la línea de «Cuando algo falla».
 4. Qué necesitas de Sil.
+
+Y deja el estado para la siguiente sesión: reescribe el bloque «EMPEZAR AQUÍ» del `HANDOFF.md` (≤25 líneas: estado, decisiones, próximo paso) y mueve lo viejo a `HANDOFF_HISTORICO_<fecha>.md`. Un tramo es una sesión.

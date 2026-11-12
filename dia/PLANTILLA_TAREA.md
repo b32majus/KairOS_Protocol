@@ -1,5 +1,7 @@
 # Documento de tarea — <título>
 
+> Plantilla de la vía Pi + ODD. En la vía OpenCode directo, el test RED y el encargo de `dia/OPENCODE.md` sustituyen a este documento.
+
 ## Repo y rama
 
 - Repo: `<ruta o nombre>`

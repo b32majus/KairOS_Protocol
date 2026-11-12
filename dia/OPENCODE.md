@@ -1,0 +1,94 @@
+# DIA · vía OpenCode directo
+
+Variante de la fase Implementar de DIA (`dia/README.md`) sin Pi ni ODD: quien diseña escribe el test RED y un encargo estricto, y un modelo de NaN lo ejecuta con `opencode run`. El resto de DIA (situación de partida, línea base, auditoría, una sola revisión, GO) no cambia.
+
+En esta vía, el encargo sustituye al documento de tarea y a `ESTADO.md`: el informe es la respuesta de ≤12 líneas del implementador más el diff.
+
+## Requisitos
+
+- OpenCode con el proveedor `nan` configurado: `opencode models | grep nan` lista los ids.
+- Un worktree y una rama propios para el tramo.
+- Si `opencode run` se queda colgado contra un `opencode serve` en segundo plano, se lanza con `--standalone`.
+
+## 1. Test RED
+
+- Lo escribe quien diseña: es el contrato del encargo. Si el proyecto tiene una plantilla de check, se copia y se escriben solo los casos; no se recorta otro check.
+- Se comprueba que da rojo **por la razón correcta** antes de escribir el encargo.
+
+## 2. Encargo
+
+Se guarda fuera del worktree, con ruta absoluta (por ejemplo `<carpeta de control>/PLAN_EJECUTOR_<TEMA>_<AAAAMMDD>.md`). Secciones fijas; el bloque «Lo que NO puedes tocar» se copia tal cual y se añaden las reglas del proyecto:
+
+```
+# Encargo al ejecutor — <título> (issue #NNN, tramo X)
+Worktree: <ruta> (rama <rama>).
+
+## Objetivo
+Hacer pasar `<ruta del test o check>` (nuevo). Léelo entero: es el contrato.
+<problema real en 2-4 líneas + decisión de Sil>
+
+## Lo que SÍ puedes tocar
+<ficheros y, dentro de cada uno, funciones concretas>
+
+## Lo que NO puedes tocar (STOP si crees que hace falta)
+- Ningún test, check, fixture, documento ni otro fichero. No git. No instales nada.
+- NO lances revisiones, subagentes ni workers: implementa tú y comprueba.
+- NO ejecutes nada que no esté en «Cómo comprobar».
+- <reglas del AGENTS.md del proyecto que apliquen>
+- <módulos o funciones concretas que no se tocan>
+
+## 1..N. <pasos, con nombres exactos de funciones, ids y textos literales>
+
+## Cómo comprobar (todos deben dar 0)
+<un único comando con el check nuevo y los checks vecinos>
+Máximo 3 intentos por fallo. Si un test te parece contradictorio con estas reglas, PARA y descríbelo sin tocar el test.
+<checks que ya fallaban en la línea base: «ya fallan antes; no deben empeorar»>
+
+Al terminar responde en ≤12 líneas: qué cambiaste (líneas +/− por fichero), el resultado de cada comando y CUALQUIER lógica añadida solo para pasar un test.
+```
+
+## 3. Línea base
+
+Antes de lanzar, se pasan los checks vecinos sobre el worktree sin tocar (`dia/README.md`, Flujo, paso 3) y se anota el resultado en el encargo.
+
+## 4. Lanzar
+
+El rol de implementador y la prohibición de delegar van **en la propia orden**, no solo en el encargo. Es el fallo más caro visto: el modelo lanza un «implementador» aparte o se cree coordinador y termina sin tocar nada. Medido en Nexus, esa capa de delegación se llevaba ≈60 % de la entrada y ≈77 % de la caché.
+
+```
+cd <worktree> && opencode run -m nan/deepseek-v4-flash "Eres el implementador. Edita tú mismo los ficheros; PROHIBIDO delegar, lanzar subagentes o revisiones. Tu rol en esta sesión es IMPLEMENTADOR, no coordinador. Lee y ejecuta el encargo de <ruta absoluta del encargo>" > <ruta ABSOLUTA del log> 2>&1
+```
+
+- Si el repo tiene un `AGENTS.md` con agentes coordinadores, se nombra en la frase el agente implementador que corresponda (por ejemplo, en repos con Atenea: «IMPLEMENTADOR (atenea-implementer-volume)»).
+- El modelo por defecto es `nan/deepseek-v4-flash`; los cambios de modelo siguen `dia/README.md`, Modelos.
+- Desde Claude Code: Bash con `run_in_background`, con `opencode` como proceso principal. Nunca `nohup`, `&` ni subshell: así Sil lo ve y llega el aviso de fin.
+- Varios encargos en paralelo: una llamada en segundo plano por encargo, respetando 7 peticiones simultáneas por modelo.
+- No se vigila con `pgrep -f` ni con bucles `while`: se encuentra a sí mismo y no termina. Se espera el aviso de fin.
+
+## 5. Auditar
+
+Se aplica la lista de auditoría de `dia/README.md`. Además:
+
+- se relanza uno mismo el comando de «Cómo comprobar»;
+- los fallos sospechosos de ser previos se comprueban contra HEAD en un worktree temporal propio, nunca con `stash`, `checkout` ni `reset` en el worktree del implementador;
+- los arreglos de pocas líneas tras la auditoría (un test propio, quitar lógica añadida solo para pasar un test) los hace directamente quien audita, sin relanzar.
+
+## 6. Documentos mecánicos
+
+Contratos, filas de decisiones, descripción de la PR y similares pueden ir a NaN (`nan/mimo-v2.6-flash`, el más barato, o `nan/deepseek-v4-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
+
+## 7. Cerrar el tramo
+
+- El encargo se archiva (por ejemplo en `archivo/planes/`).
+- Se reescribe el bloque «EMPEZAR AQUÍ» del `HANDOFF.md` (`ARRANQUE.md` §6). Un tramo es una sesión.
+- Push, PR y merge: con GO de Sil, individual o en bloque (`ARRANQUE.md` §4).
+
+## QA con checks de navegador
+
+Patrón reutilizable en cualquier proyecto con interfaz: los modelos de NaN escriben bien checks de navegador de **solo lectura** (Playwright headless). Cada check imprime OK, FALLO, INFO o NOTA, afirma con DOM y texto, y las capturas son solo para humanos. En Nexus cerraron un lote de QA en un día; solo quedó manual un ticket de criterio humano.
+
+## Ejemplos y herramientas (Nexus, solo lectura)
+
+- Skill del ciclo: `/srv/kairos-lab/control/nexus/.claude/skills/encargo-dia/SKILL.md`, con `plantilla_check_navegador.mjs` al lado.
+- Lanzador de checks: `/srv/kairos-lab/control/nexus/bin/run_checks.sh` (un log por check, salida «nombre rc», timeout).
+- Encargos: `/srv/kairos-lab/control/nexus/archivo/planes/PLAN_EJECUTOR_EA_DETALLE_CAUSALIDAD_20261108.md` (código), `..._MORISKY_EXPORT_20261108.md` (arreglo pequeño) y `..._QA676_20261108.md` (check de QA).

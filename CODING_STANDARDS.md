@@ -30,6 +30,8 @@ Respect the established architecture, vocabulary and conventions of the code bei
 
 Do not introduce a new architectural or stylistic pattern merely because it is attractive in isolation.
 
+Preserve the line endings (CRLF or LF) and encoding of each file you edit. Do not let an editor or formatter normalize a whole file as a side effect of a scoped change.
+
 When a local convention is actively harmful to the requested change, make that conflict explicit and change it deliberately rather than drifting into a second competing pattern.
 
 Names should expose domain intent. Avoid vague, generic or misleading names that require implementation knowledge or explanatory comments to understand what a concept represents. Prefer the repository's established domain vocabulary.

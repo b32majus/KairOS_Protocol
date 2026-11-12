@@ -27,7 +27,7 @@ Un mismo proyecto puede usar los tres a lo largo del tiempo. Lo importante es no
 ## Dónde vive cada cosa
 
 - `ARRANQUE.md`: prompt de arranque común para cualquier agente.
-- `dia/`: protocolo DIA.
+- `dia/`: protocolo DIA (`README.md`), su vía OpenCode directo (`OPENCODE.md`) y la plantilla de la vía Pi (`PLANTILLA_TAREA.md`).
 - `metis/`: resumen de Metis; el código está en su propio repo.
 - `atenea/`: reglas y README de Atenea. Sus documentos (`docs/`), comprobadores (`tools/`) y agentes (`.opencode/`) siguen en la raíz para no romper las rutas que usan los proyectos y las Coras.
 - La ruta antigua `/srv/kairos-lab/Atenea` sigue funcionando como enlace al repo.
