@@ -48,6 +48,7 @@ El cuello de botella no son los tests de Metis, sino las rondas de revisión alr
 - Las auditorías son de solo lectura. Nunca se lee `reference.patch`.
 - Nada de datos reales de pacientes, credenciales ni secretos.
 - No mates procesos ni liberes puertos de otros proyectos: repórtalos.
+- Dentro de herdr (VPS): lanzar implementadores en paneles visibles, hablar con otras sesiones y sus reglas en `HERDR.md`.
 - Antes de afirmar qué hace un sistema, verifícalo en su código o en sus logs.
 - Arreglos acotados: un cambio concreto no justifica repetir un protocolo completo.
 - Ahorro de tokens: los modelos caros piensan, diseñan y auditan; los baratos implementan. El test que hace de contrato lo escribe quien diseña (vía OpenCode) u ODD a partir de criterios verificables (vía Pi), y nunca lo audita quien lo escribió. Los baratos sí escriben bien checks de QA de solo lectura y documentos mecánicos.
@@ -78,3 +79,23 @@ Cada proyecto tiene un `CALIDAD.md` junto a su `HANDOFF.md`. Al cerrar cada trab
 Y cuando aparezca después un fallo en algo ya mezclado, o se revierta: `fecha · ESCAPADO o REVERT · qué falló · tarea de origen · qué lo habría detectado`.
 
 Una vez al mes, quien lidera el proyecto lo resume a Sil en 3 líneas: fallos escapados, reverts y si algún tipo de tarea o modelo da más problemas. Si los escapados suben, se endurece el protocolo de ese tipo de tarea (pasar de S a M, añadir una regla de CI).
+
+## 7. Prompt de apertura
+
+Lo que Sil pega al abrir una sesión de proyecto:
+
+```
+Vas a trabajar siguiendo el protocolo KairOS (GitHub Kairós Protocol).
+
+1. Lee primero, en este orden y sin responder de memoria:
+   - /srv/kairos-lab/KairOS_Protocol/ARRANQUE.md
+   - /srv/kairos-lab/KairOS_Protocol/PROTOCOLOS.md
+   - el README del protocolo que elijas (dia/README.md, dia/OPENCODE.md o metis/README.md)
+   - si estás dentro de herdr (HERDR_ENV=1): /srv/kairos-lab/KairOS_Protocol/HERDR.md
+2. Si este trabajo continúa uno anterior, lee el bloque «EMPEZAR AQUÍ» de <ruta del HANDOFF.md> y contrástalo con GitHub y el repo (gh pr list, gh issue list, git worktree list, git log). Lo que diga GitHub manda sobre el HANDOFF.
+3. Tarea: <una o dos frases>.
+4. Restricciones propias de este proyecto: <p. ej. ramas que no se tocan, datos, áreas de riesgo>. Aquí cuenta como sensible: <p. ej. datos clínicos, permisos, migraciones, borrados>.
+5. Responde en 5 líneas como máximo: proyecto · tarea · protocolo (y vía, tamaño S/M y si es sensible, si es DIA) y por qué · primer paso · qué necesitas de Sil.
+
+Sin GO explícito de Sil no hagas push, PR, merge ni deploy (un GO a una propuesta concreta vale en bloque, ARRANQUE §4). Cuando termines, haz lo que dice ARRANQUE §6: reescribe «EMPEZAR AQUÍ» en el HANDOFF y añade la línea en CALIDAD.md.
+```

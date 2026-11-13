@@ -62,6 +62,7 @@ cd <worktree> && opencode run -m nan/deepseek-v4-flash "Eres el implementador. E
 - Si el repo tiene un `AGENTS.md` con agentes coordinadores, se nombra en la frase el agente implementador que corresponda (por ejemplo, en repos con Atenea: «IMPLEMENTADOR (atenea-implementer-volume)»).
 - El modelo por defecto es `nan/deepseek-v4-flash`; los cambios de modelo siguen `dia/README.md`, Modelos.
 - Desde Claude Code: Bash con `run_in_background`, con `opencode` como proceso principal. Nunca `nohup`, `&` ni subshell: así Sil lo ve y llega el aviso de fin.
+- Dentro de herdr (VPS), mejor en un panel visible al lado de la sesión: `HERDR.md`, patrón 1.
 - Varios encargos en paralelo: una llamada en segundo plano por encargo, respetando 7 peticiones simultáneas por modelo.
 - No se vigila con `pgrep -f` ni con bucles `while`: se encuentra a sí mismo y no termina. Se espera el aviso de fin.
 

@@ -1,0 +1,67 @@
+# Herdr · trabajar dentro del VPS
+
+Las sesiones de agentes de Sil corren en el VPS dentro de herdr (herdr.dev, 0.9.5): un multiplexor de terminal que conoce a los agentes. Cada proyecto es un espacio de trabajo (workspace) con su agente; el agente se ve en la barra lateral como `working`, `blocked` (espera aprobación o respuesta), `done` o `idle`.
+
+Antes de usar herdr desde un agente: `test "${HERDR_ENV:-}" = 1`. Si falla, no se usa. La sintaxis manda en el binario (`herdr <grupo>` sin subcomando muestra la ayuda; `herdr --skill` da la guía para agentes). No ejecutes `herdr` a secas: abre la interfaz.
+
+## Qué aporta
+
+- **Persistencia**: si se corta el SSH, todo sigue corriendo (trenes de Metis, encargos, servidores). Si se reinicia el servidor de herdr, vuelve la disposición y las conversaciones de Claude, OpenCode, Pi, Codex y Hermes se reanudan solas (integraciones instaladas: `herdr integration status`).
+- **Sil ve quién le necesita**: el estado de cada agente en la barra lateral, con aviso al terminar o al pedir aprobación.
+- **Un agente puede abrir paneles y lanzar otros agentes o comandos**, leer su salida y esperar a que terminen. Es la base de los patrones de abajo.
+
+## Patrones
+
+### 1. Implementador de NaN en un panel visible (DIA, vía OpenCode)
+
+Sustituye al «Bash en segundo plano» de `dia/OPENCODE.md` §4: Sil ve al implementador trabajar en directo, junto a la sesión que lo lanzó.
+
+```bash
+P=$(herdr pane split --current --direction down --cwd <worktree> --no-focus | jq -r '.result.pane.pane_id')
+herdr pane run "$P" 'opencode run -m nan/deepseek-v4-flash "Eres el implementador. … Lee y ejecuta el encargo de <ruta>" > <log absoluto> 2>&1; echo "__FIN rc=$?"'
+herdr pane wait-output "$P" --regex '^__FIN rc=[0-9]+' --timeout 1800000
+```
+
+- La espera (`wait-output`) se lanza como Bash en segundo plano desde Claude Code, para que llegue el aviso de fin sin bloquear la sesión.
+- La regex va anclada (`^`) y pide dígitos, para no casar con la propia línea del comando.
+- Al terminar: se lee el log, se audita y se cierra el panel (`herdr pane close "$P"`; solo paneles propios).
+- Varios encargos en paralelo: un panel por encargo (máximo 7 por modelo, `dia/OPENCODE.md`). Si el panel actual es ancho, se divide a la derecha; si es estrecho o alto, hacia abajo; si ya no caben, una pestaña propia (`herdr tab create --no-focus`).
+
+### 2. Segundo revisor ciego en su panel
+
+El revisor de las tareas M o sensibles (`dia/README.md`, «Segundo revisor») se lanza igual que el patrón 1, con la orden de `dia/OPENCODE.md` §5. Es parte de la única auditoría, no una revisión más.
+
+### 3. Mensajes entre sesiones de proyecto
+
+Una sesión puede escribir a otra directamente, sin que Sil copie y pegue:
+
+```bash
+herdr agent list                       # nombres y pane_id de los agentes vivos
+herdr agent prompt <nombre|pane_id> "<mensaje>" --wait --timeout 600000
+herdr agent read <nombre|pane_id> --source recent-unwrapped --lines 120
+```
+
+- Si responde `agent_blocked`, el otro agente espera a Sil: no se envía nada.
+- Un `timeout` o `agent_prompt_stalled` no prueba que el mensaje no llegara: leer antes de reenviar.
+- Si una respuesta larga no sale entera en `agent read`, se pide al otro agente que la escriba en un archivo y responda solo con la ruta.
+
+### 4. Worktree por tramo como espacio de trabajo
+
+`herdr worktree create --cwd <repo> --branch <rama> --base <ref> --no-focus` crea el worktree y lo abre como espacio agrupado con el del repo, así Sil ve cada tramo en la barra lateral. `herdr worktree list` los lista.
+
+### 5. Avisar a Sil
+
+Cuando una sesión se queda esperando un GO o una decisión: `herdr notification show "<proyecto>: GO pendiente" --body "<qué>" --sound request`.
+
+## Reglas
+
+- **Las aprobaciones son de Sil.** Ningún agente responde por otro a un diálogo `blocked` (ni con `agent send-keys` ni con `pane send-keys`).
+- **No se cierra lo ajeno.** Solo se cierran paneles, pestañas y espacios que haya creado el propio agente. Nunca `herdr server stop`, `herdr session stop` ni matar el proceso de herdr: paran todas las sesiones. Es la regla de «no matar procesos ajenos» (`ARRANQUE.md` §4).
+- **Borrar un worktree necesita GO propio**, también con `herdr worktree remove` (`ARRANQUE.md` §4). `--force` y `--trust-repository`, nunca por defecto.
+- **Las pantallas son legibles entre sesiones.** Cualquier sesión puede leer la salida de otra: nada de datos reales de pacientes, credenciales ni secretos en ningún panel. `[experimental] pane_history` (guarda la salida en disco) sigue apagado.
+- **Sin robar el foco**: paneles con `--no-focus`, para no mover a Sil de donde está; usar `--current` o IDs explícitos, nunca el panel que tenga el foco.
+
+## Pendiente de probar
+
+- Metadatos en la barra lateral (`workspace.report_metadata`, API de socket): mostrar «tramo X · esperando GO» o el avance de un tren de Metis.
+- Plugins con event hooks (p. ej. aviso cuando un agente pasa a `done`).

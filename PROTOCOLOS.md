@@ -26,7 +26,8 @@ Un mismo proyecto puede usar los tres a lo largo del tiempo. Lo importante es no
 
 ## Dónde vive cada cosa
 
-- `ARRANQUE.md`: prompt de arranque común para cualquier agente.
+- `ARRANQUE.md`: prompt de arranque común para cualquier agente (y el prompt de apertura, §7).
+- `HERDR.md`: cómo trabajar dentro de herdr en el VPS (paneles, otras sesiones, reglas).
 - `dia/`: protocolo DIA (`README.md`), su vía OpenCode directo (`OPENCODE.md`) y la plantilla de la vía Pi (`PLANTILLA_TAREA.md`).
 - `metis/`: resumen de Metis; el código está en su propio repo.
 - `atenea/`: reglas y README de Atenea. Sus documentos (`docs/`), comprobadores (`tools/`) y agentes (`.opencode/`) siguen en la raíz para no romper las rutas que usan los proyectos y las Coras.
