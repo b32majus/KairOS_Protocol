@@ -1,0 +1,10 @@
+id = "kairos.actividad"
+name = "KairOS actividad"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Registra cambios de estado de los agentes y marca en la barra lateral los espacios que esperan a Sil"
+platforms = ["linux"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["bash", "actividad.sh"]

@@ -51,7 +51,32 @@ herdr agent read <nombre|pane_id> --source recent-unwrapped --lines 120
 
 ### 5. Avisar a Sil
 
-Cuando una sesión se queda esperando un GO o una decisión: `herdr notification show "<proyecto>: GO pendiente" --body "<qué>" --sound request`.
+Cuando una sesión se queda esperando un GO o una decisión: `herdr notification show "<proyecto>: GO pendiente" --body "<qué>" --sound request`. Herdr ya avisa solo cuando un agente termina o pide aprobación (salvo en la pestaña que Sil tiene delante); `notification show` es para lo que herdr no detecta.
+
+### 6. Estado del tramo en la barra lateral
+
+Cada espacio muestra debajo de la rama una línea `$estado` que pone la propia sesión:
+
+```bash
+herdr workspace report-metadata "$HERDR_WORKSPACE_ID" --source kairos:estado --token "estado=DIA ventas · esperando GO"
+herdr workspace report-metadata "$HERDR_WORKSPACE_ID" --source kairos:estado --clear-token estado
+```
+
+- Se actualiza al cambiar de fase (diseño, implementando, auditando, esperando GO, tren 3/5) y se borra al cerrar el tramo. Máximo 80 caracteres.
+- No sobrevive a un reinicio del servidor de herdr.
+
+### 7. Plugin `kairos.actividad`
+
+Plugin local (`~/.config/herdr-plugins/kairos-actividad/`, enlazado con `herdr plugin link`; copia versionada en `herdr/kairos-actividad/` de este repo). Con cada cambio de estado de cualquier agente:
+
+- añade una línea `fecha · espacio · agente · estado` a `~/.local/state/herdr/plugins/kairos.actividad/actividad-<AAAAMMDD>.tsv` (sirve para medir cuánto espera cada sesión a Sil);
+- mientras un agente está `blocked`, pone en su espacio la línea `$espera` («espera a Sil desde HH:MM») y la quita cuando vuelve a trabajar o termina.
+
+Desactivar: `herdr plugin disable kairos.actividad`; quitar: `herdr plugin unlink kairos.actividad`.
+
+## Configuración (13-11)
+
+En `~/.config/herdr/config.toml` (copia previa: `config.toml.bak-20261113`): avisos dentro de herdr (`[ui.toast] delivery = "herdr"`, venían apagados) y dos líneas más en cada espacio (`$estado`, `$espera`). Tras editarlo: `herdr server reload-config` (no para nada). En 0.9.5 los tokens no admiten color ni reglas; la documentación web describe una versión más nueva.
 
 ## Reglas
 
@@ -60,8 +85,3 @@ Cuando una sesión se queda esperando un GO o una decisión: `herdr notification
 - **Borrar un worktree necesita GO propio**, también con `herdr worktree remove` (`ARRANQUE.md` §4). `--force` y `--trust-repository`, nunca por defecto.
 - **Las pantallas son legibles entre sesiones.** Cualquier sesión puede leer la salida de otra: nada de datos reales de pacientes, credenciales ni secretos en ningún panel. `[experimental] pane_history` (guarda la salida en disco) sigue apagado.
 - **Sin robar el foco**: paneles con `--no-focus`, para no mover a Sil de donde está; usar `--current` o IDs explícitos, nunca el panel que tenga el foco.
-
-## Pendiente de probar
-
-- Metadatos en la barra lateral (`workspace.report_metadata`, API de socket): mostrar «tramo X · esperando GO» o el avance de un tren de Metis.
-- Plugins con event hooks (p. ej. aviso cuando un agente pasa a `done`).
