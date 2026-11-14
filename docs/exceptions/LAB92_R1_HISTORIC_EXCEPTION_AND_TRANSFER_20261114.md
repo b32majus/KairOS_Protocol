@@ -1,6 +1,6 @@
 # Laboratorio #92 · R1/F1 — excepción C-087 histórica y traslado al producto actual
 
-**Estado: PROPUESTA DE RECONCILIACIÓN DE AUTORIDAD / PREPARADA, NO VIGENTE EN CANÓNICO.** Fecha 2026-11-14. La responsable humana aprobó los criterios de recuperación de F1 y **preparar la autoridad** el 14/11/2026. Ese GO no equivale al GO de lanzamiento de un nuevo implementador, a una ratificación retroactiva, a un aumento de correctores, ni a autorización de merge/deploy.
+**Estado: DISPOSICIÓN DOCUMENTAL DE ALCANCE Y CONSUMO HISTÓRICO; vigente solo tras su integración en KairOS `main`. NO READY_TO_LAUNCH.** Fecha 2026-11-14. La responsable humana aprobó los criterios de recuperación de F1 y **preparar la autoridad** el 14/11/2026. Ese GO no equivale al GO de lanzamiento de un nuevo implementador, a una ratificación retroactiva, a un aumento de correctores, ni a autorización de merge/deploy.
 
 ## Autoridades y hechos verificables
 
