@@ -134,6 +134,8 @@ IMPLEMENT
         → blocker / new material issue → HUMAN STOP
 ```
 
+**Laboratorio #92/R1 (solo trazabilidad, sin nuevo permiso):** la dispensa histórica EXC-LAB92-R1-F3-20261017 debe considerarse ocupada por el candidato local `665ad02`; nunca reutilizarla como corrector adicional ni reiniciar 2/2 tras cambiar de rama/protocolo. La propuesta de transferencia al producto actual está en `docs/exceptions/LAB92_R1_HISTORIC_EXCEPTION_AND_TRANSFER_20261114.md`; requiere nueva aprobación humana de ejecución y no modifica el límite general C-087.
+
 Correctors close supplied findings; they do not search for new sibling defects by default. If a review finding explicitly requires an adversarial witness or named conditional safeguard, the corrector supplies only that bounded closure.
 
 ## 8. Herdr and operator-controlled launch
