@@ -83,7 +83,7 @@ Se aplica la lista de auditoría de `dia/README.md`. Además:
 En tareas M o sensibles se lanza además el segundo revisor (`dia/README.md`, «Segundo revisor»), antes de que el auditor dé el veredicto y sin pasarle la auditoría:
 
 ```
-cd <worktree> && opencode run -m openai/gpt-6.1-sol "Eres REVISOR de solo lectura. PROHIBIDO editar ficheros, ejecutar git que modifique nada, instalar o delegar. Lee los criterios y el encargo de <ruta absoluta del encargo> y revisa el diff (git diff <rama base> y git status). Busca: criterios no cumplidos o sin test, lógica añadida solo para pasar un test, decisiones que el encargo no tomaba y el implementador tomó por su cuenta, cambios que ningún criterio pide, errores de lógica, casos límite, seguridad y datos. Responde en ≤15 líneas: un hallazgo por línea (fichero:línea · qué falla · gravedad alta/media/baja), o «sin hallazgos»." > <ruta ABSOLUTA del log> 2>&1
+cd <worktree> && opencode run -m openai/gpt-6.2-sol "Eres REVISOR de solo lectura. PROHIBIDO editar ficheros, ejecutar git que modifique nada, instalar o delegar. Lee los criterios y el encargo de <ruta absoluta del encargo> y revisa el diff (git diff <rama base> y git status). Busca: criterios no cumplidos o sin test, lógica añadida solo para pasar un test, decisiones que el encargo no tomaba y el implementador tomó por su cuenta, cambios que ningún criterio pide, errores de lógica, casos límite, seguridad y datos. Responde en ≤15 líneas: un hallazgo por línea (fichero:línea · qué falla · gravedad alta/media/baja), o «sin hallazgos»." > <ruta ABSOLUTA del log> 2>&1
 ```
 
 - Si el auditor es Cora o no hay OpenAI, se cambia `-m` por el modelo de NaN que no implementó.
