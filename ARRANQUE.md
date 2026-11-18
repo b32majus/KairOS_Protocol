@@ -78,7 +78,7 @@ Cada proyecto tiene un `CALIDAD.md` junto a su `HANDOFF.md`. Al cerrar cada trab
 
 Y cuando aparezca después un fallo en algo ya mezclado, o se revierta: `fecha · ESCAPADO o REVERT · qué falló · tarea de origen · qué lo habría detectado`.
 
-Una vez al mes, quien lidera el proyecto lo resume a Sil en 3 líneas: fallos escapados, reverts y si algún tipo de tarea o modelo da más problemas. Si los escapados suben, se endurece el protocolo de ese tipo de tarea (pasar de S a M, añadir una regla de CI).
+Una vez al mes, quien lidera el proyecto lo resume a Sil en 3 líneas: fallos escapados, reverts y si algún tipo de tarea o modelo da más problemas. Si los escapados suben, se endurece el protocolo de ese tipo de tarea (pasar de S a M, añadir una regla de CI). En ese mismo resumen se propone quitar las reglas y checks que no han detectado nada en los últimos meses: si no, solo crecen.
 
 ## 7. Prompt de apertura
 

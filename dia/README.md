@@ -75,6 +75,7 @@ El resultado es **OK** o **REHACER con el motivo exacto**. Se comprueba:
 
 - si el implementador terminó sin cambios en `git status` (delegó, se creyó coordinador o se cortó): se relanza una vez y, si se repite, se cambia de modelo antes de insistir. No se espera a un worker que no existe;
 - cada criterio de aceptación tiene un test que lo comprueba;
+- si la tarea cambia algo que ve el usuario, hay además un test de recorrido de principio a fin (abrir, usar y ver el resultado, como haría una persona), no solo tests unitarios: estos pueden pasar con la funcionalidad rota;
 - el auditor vuelve a lanzar él mismo los tests y checks; no se fía del informe del implementador. Se mira la cola de la salida, no solo el resumen;
 - los fallos que ya estaban en la línea base no cuentan, pero no han empeorado;
 - `git diff --stat` solo toca lo que el alcance permite; en la vía OpenCode, ningún test ni check tocado;
