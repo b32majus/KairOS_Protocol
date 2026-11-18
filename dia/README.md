@@ -53,7 +53,7 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 Forma parte de **la misma** auditoría, no es una ronda extra: sus hallazgos entran en el único veredicto OK o REHACER.
 
 - **Modelo de otra familia** que el implementador y que el auditor, para que no compartan puntos ciegos:
-  - por defecto `openai/gpt-6.1-sol` en OpenCode (suscripción de OpenAI, cuota fija, no gasta créditos de NaN);
+  - por defecto `openai/gpt-6.2-sol` en OpenCode (suscripción de OpenAI, cuota fija, no gasta créditos de NaN);
   - si el auditor es Cora (también OpenAI), o OpenAI no está disponible: el modelo de NaN que no implementó (`nan/glm5.3-flash` si implementó deepseek, y al revés).
 - **Ciego**: recibe los criterios, el encargo o documento de tarea y el diff. Nunca la auditoría ni las conclusiones de quien diseñó.
 - **Solo lectura**: no edita ni arregla. Orden de lanzamiento en `dia/OPENCODE.md` §5.

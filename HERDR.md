@@ -74,6 +74,15 @@ Plugin local (`~/.config/herdr-plugins/kairos-actividad/`, enlazado con `herdr p
 
 Desactivar: `herdr plugin disable kairos.actividad`; quitar: `herdr plugin unlink kairos.actividad`.
 
+### 8. Codex nativo en un panel (revisor o turno de noche)
+
+Herdr reconoce Codex igual que a Claude y OpenCode (`herdr integration status`: los tres al día), así que el panel muestra `working`, `blocked` o `done`. Se elige así:
+
+- **Revisión puntual, sin diálogo** (segundo revisor de DIA): `opencode run -m openai/gpt-6.2-sol` en un panel, como en el patrón 1. Es lo habitual: misma suscripción, arranque ligero y un log claro.
+- **Sesión larga o desatendida** en la que Codex trabaja con herramientas y puede pedir aprobación: Codex nativo, para que herdr vea su estado y avise a Sil. Se lanza con `herdr agent start <nombre> --kind codex --pane "$P" -- -m gpt-6.2-sol` y se le habla con `herdr agent prompt`.
+- Codex nativo carga unos 30 000 tokens de instrucciones en cada arranque (probado 18-11); por eso no se usa para revisiones cortas.
+- Turno de noche (receta guardada en Engram #1250): un agente implementa y otro revisa cada diff; máximo 3 intentos por paso, y si se agotan se deja el paso marcado como bloqueado con su diagnóstico, no se repite. Siempre con ramas y worktrees propios, sin push ni merge sin GO.
+
 ## Configuración (13-11)
 
 En `~/.config/herdr/config.toml` (copia previa: `config.toml.bak-20261113`): avisos dentro de herdr (`[ui.toast] delivery = "herdr"`, venían apagados) y dos líneas más en cada espacio (`$estado`, `$espera`). Tras editarlo: `herdr server reload-config` (no para nada). En 0.9.5 los tokens no admiten color ni reglas; la documentación web describe una versión más nueva.
