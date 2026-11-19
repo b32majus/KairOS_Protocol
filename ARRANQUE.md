@@ -13,6 +13,7 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
 - **Directo** (sin protocolo): para arreglos mínimos que no necesitan ni DIA ni Metis.
   - Vale si cumple todo: cabe en una frase, toca 1–2 archivos, no hay comportamiento que acordar y no toca áreas de riesgo (datos clínicos, permisos, migraciones, pagos, envíos a terceros).
   - Se hace en una rama propia, se pasan los tests del proyecto y se hace commit sin push. Sin documento de tarea ni auditoría: el diff y la salida de los tests bastan para Sil.
+  - Antes de crear una función, componente o estilo, se busca en el repo si ya existe uno que sirva y se usa ese. Si se crea uno nuevo, la línea del registro de calidad dice qué se buscó.
   - Si cambia algo que ve el usuario, debe haber un test (existente o nuevo de pocas líneas) que lo cubra. Si no lo hay y no cabe en pocas líneas, es DIA.
   - Si al empezar crece (más archivos, dudas de diseño, tests nuevos de verdad), se para y pasa a DIA.
   - Contra el abuso: cada directo se anota en el registro de calidad (§6), y en la duda entre directo y DIA, es DIA.
