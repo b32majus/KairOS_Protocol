@@ -91,6 +91,12 @@ En tareas M o sensibles se lanza además el segundo revisor (`dia/README.md`, «
 cd <worktree> && opencode run -m openai/gpt-6.2-sol "Eres REVISOR de solo lectura. PROHIBIDO editar ficheros, ejecutar git que modifique nada, instalar o delegar. Lee los criterios y el encargo de <ruta absoluta del encargo> y revisa el diff (git diff <rama base> y git status). Busca: criterios no cumplidos o sin test, lógica añadida solo para pasar un test, decisiones que el encargo no tomaba y el implementador tomó por su cuenta, cambios que ningún criterio pide, errores de lógica, casos límite, seguridad y datos. Responde en ≤15 líneas: un hallazgo por línea (fichero:línea · qué falla · gravedad alta/media/baja), o «sin hallazgos»." > <ruta ABSOLUTA del log> 2>&1
 ```
 
+En tareas **sensibles**, se añade a esa misma orden, antes de «Responde en ≤15 líneas»:
+
+```
+Además, ATACA lo que toca el diff como lo haría alguien con malas intenciones, solo en local y con datos sintéticos, sin editar nada: entra sin sesión o con un usuario pide datos de otro; prueba contraseñas o códigos sin límite; intenta saltarte cada regla de negocio por otra vía que no sea el botón; mete en cada entrada texto muy largo, HTML, <script>, caracteres especiales y números en el límite; busca claves, contraseñas o datos reales en el código, en lo publicado y en lo que llega al navegador. Puedes arrancar la app en local y mandarle peticiones; di qué intentaste aunque no encuentres nada.
+```
+
 - Si el auditor es Cora o no hay OpenAI, se cambia `-m` por el modelo de NaN que no implementó.
 - Tras la revisión, `git status` del worktree debe seguir igual. Si cambió, se descarta su informe y se avisa a Sil.
 

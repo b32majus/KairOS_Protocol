@@ -58,6 +58,13 @@ Forma parte de **la misma** auditoría, no es una ronda extra: sus hallazgos ent
 - **Ciego**: recibe los criterios, el encargo o documento de tarea y el diff. Nunca la auditoría ni las conclusiones de quien diseñó.
 - **Solo lectura**: no edita ni arregla. Orden de lanzamiento en `dia/OPENCODE.md` §5.
 - El auditor comprueba cada hallazgo en el código: los confirmados van al REHACER; los descartados se anotan en una línea con el motivo.
+- **En tareas sensibles, además ataca.** El mismo segundo revisor (no uno más) recibe la orden de intentar romper lo que el diff toca, como lo haría alguien con malas intenciones. Revisar el diff no basta: un fallo de permisos o una clave a la vista pueden estar en código que el diff no muestra. Lo que intenta, según lo que exista en el proyecto:
+  - entrar sin sesión, o con la sesión de un usuario pedir los datos de otro;
+  - probar contraseñas o códigos sin límite;
+  - saltarse una regla de negocio por otra vía (otra pantalla, otra llamada, otro orden de pasos) en vez de por el botón que la oculta;
+  - meter datos raros en cada entrada: texto muy largo, HTML o `<script>`, caracteres especiales, números en el límite;
+  - buscar claves, contraseñas o datos reales en el código, en lo que se publica y en lo que ve el navegador.
+  Solo en local, con datos sintéticos y sin editar nada. Orden en `dia/OPENCODE.md` §5.
 
 ## Reglas
 
