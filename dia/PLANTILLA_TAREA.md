@@ -27,6 +27,10 @@
 - Restricciones del proyecto: <las que apliquen del AGENTS.md del repo destino>.
 - Normas de código: el `CODING_STANDARDS.md` del repo destino, si existe.
 
+## Piezas existentes que se deben reutilizar
+
+<Funciones, componentes, estilos o variables que ya hacen parte de lo pedido, con su ruta. Quien diseña las busca antes de escribir este documento. Si no hay ninguna: «ninguna: se buscó <qué> en <dónde>». Si al implementar parece que algo ya existe y no está aquí, se reutiliza o se para y se avisa; no se crea una copia.>
+
 ## Criterios de aceptación
 
 Entre 5 y 10, cada uno verificable con un test:

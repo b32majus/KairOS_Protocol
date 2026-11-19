@@ -82,6 +82,7 @@ El resultado es **OK** o **REHACER con el motivo exacto**. Se comprueba:
 - se lee el diff de las funciones tocadas, con su contexto, y se revisan 2–3 puntos delicados;
 - no hay lógica añadida solo para pasar un test;
 - no hay código duplicado, abstracciones que nadie pidió ni comportamiento fuera de los criterios (son los olores «Duplicated Code» y «Speculative Generality» de `.agents/skills/code-review/SKILL.md`, más el «scope creep» de su eje Spec);
+- lo nuevo no existía ya: por cada función, componente o estilo nuevo del diff, se busca en el repo (`grep` del nombre, de la clase CSS o de lo que hace) si había uno que servía. El diff solo no lo muestra. Si había uno, es REHACER salvo que el encargo explique por qué no se usa;
 - no hay nada fuera de alcance ni fuera de las restricciones del proyecto;
 - `ESTADO.md` (vía Pi) o la respuesta de ≤12 líneas (vía OpenCode) coincide con el diff.
 
