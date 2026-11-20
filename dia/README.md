@@ -70,7 +70,7 @@ Forma parte de **la misma** auditoría, no es una ronda extra: sus hallazgos ent
 
 - La implementación va en una rama propia creada desde la rama de trabajo del proyecto; nunca directamente sobre ramas protegidas.
 - Sin push ni PR sin GO de Sil (individual o en bloque, `ARRANQUE.md` §4).
-- Se respetan el `AGENTS.md`, el `CODING_STANDARDS.md` (si existe) y las restricciones del proyecto destino.
+- Se respetan el `AGENTS.md`, el `CODING_STANDARDS.md` del repo (si no tiene, el común de KairOS_Protocol) y las restricciones del proyecto destino.
 - Datos sintéticos: no se usan datos reales de personas ni de clientes.
 - En un worktree con trabajo del implementador nunca se hace `git stash`, `checkout` ni `reset`. Para comparar con HEAD se usa un worktree temporal propio.
 - **Guardarraíles ejecutables antes que reglas escritas** (`CODING_STANDARDS.md`, preámbulo y §7). Para llegar a producción, cada proyecto debe tener en CI, bloqueando el merge: lint, comprobación de tipos (si el lenguaje la tiene), su suite de tests y un escaneo de secretos. Si a un proyecto le falta alguno, es una tarea propia, no algo que se arregle de paso.

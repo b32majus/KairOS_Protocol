@@ -1,8 +1,8 @@
-# Atenea Coding Standards
+# Engineering Coding Standards
 
-This file contains Atenea's stable repo-local horizontal engineering guardrails.
+Common template for every KairOS code repository. Each repo keeps its own copy as `CODING_STANDARDS.md` at its root (that is the file DIA and Metis read) and appends its project-specific rules in a final section of its own (for example, Nexus adds clinical rules). Source of this version: Nexus `promueve/nexus-v4` (#955, 2026-11-19) without its PROMueve-specific parts.
 
-It does **not** define an execution sequence or require one permanent shaping, TDD, delegation or review methodology. Adopted upstream workflows may add task-specific procedures when they are explicitly active; these standards remain in force regardless of method. Machine-decidable rules belong in deterministic repo tooling. If a recurring quality failure can be expressed as a linter, type rule, schema check, test or CI guardrail, prefer that executable guardrail over adding another prose rule here. This file is engineering policy, not a second execution or review lifecycle.
+This file contains the repository's stable horizontal engineering guardrails. It does **not** define an execution sequence or a review lifecycle; the protocol in use (DIA, Metis or a manual review) supplies the method, and this file supplies the guardrails. Machine-decidable rules belong in deterministic repo tooling: if a recurring quality failure can be expressed as a linter, type rule, schema check, test or CI guardrail, prefer that executable guardrail over adding another prose rule here. Deterministic evidence is the first-line acceptance signal.
 
 ## 1. Keep changes scoped
 
@@ -31,8 +31,6 @@ Keep behavior that changes for the same reason close enough to understand and mo
 Respect the established architecture, vocabulary and conventions of the code being changed unless the work explicitly changes those conventions.
 
 Do not introduce a new architectural or stylistic pattern merely because it is attractive in isolation.
-
-Preserve the line endings (CRLF or LF) and encoding of each file you edit. Do not let an editor or formatter normalize a whole file as a side effect of a scoped change.
 
 When a local convention is actively harmful to the requested change, make that conflict explicit and change it deliberately rather than drifting into a second competing pattern.
 
@@ -68,13 +66,11 @@ Prefer deterministic verification that can independently disagree with the imple
 
 Do not add tautological tests or checks that merely restate the implementation.
 
-When test-first/TDD is explicitly active, follow the adopted upstream method. Do not infer TDD merely because tests exist, and do not force it for wiring-only, generated, declarative or purely visual changes when it would provide no independent oracle.
+Use TDD when it applies. Do not force TDD for wiring-only, generated, declarative or purely visual changes when it would provide no independent oracle.
 
 Negative and adversarial verification should be proportional to actual risk, especially around authorization, parsing, trust boundaries, migrations, failure/retry behavior, state transitions and destructive operations.
 
-For stateful, temporal, concurrent, cached, tenant-scoped or idempotent behavior, include at least one regression case that would fail a plausible stale-state, wrong-order, cross-scope or repeated-operation implementation when that risk is material. Prefer an executable interleaving/invariant check over prose about the risk.
-
-For a new or materially changed checker, scanner or gate over security, privacy, state, parsing or another trust boundary, prove that the oracle can disagree with the implementation: include at least one known-good case and at least one representative planted violation that must fail. When the invariant applies to shipped/generated runtime behavior, validate the built artifact as well as source where technically relevant. The goal is falsifiability, not ceremonial test volume.
+For stateful, temporal, concurrent, cached or idempotent behavior, add at least one regression case that would fail a plausible stale-state, wrong-order, duplicate/retry or repeated-operation implementation when that risk is material. Prefer an executable invariant/interleaving check over another prose warning.
 
 ## 8. Fail explicitly when correctness requires knowledge
 
@@ -83,8 +79,6 @@ Do not hide invariant, authority, persistence or safety failures behind silent f
 When correctness depends on knowing, `UNKNOWN` is not `SUCCESS`.
 
 Return or propagate actionable failures. Make retry, idempotency and recovery semantics explicit when operations may repeat or produce persistent side effects.
-
-When correctness depends on ordering, version/generation, ownership or state transitions, make the stale-write/duplicate/out-of-order behavior explicit rather than relying on timing luck or caller discipline.
 
 Preserve enough diagnostic context to understand failures without leaking secrets.
 
@@ -112,42 +106,26 @@ Optimize when requirements, measurements or credible load characteristics justif
 
 Do not pre-emptively introduce caches, queues, sharding, microservices, distributed coordination or generic scalability abstractions.
 
-For Atenea, "scalable" means the software can be understood, modified, tested, operated and extended without each change multiplying fragility.
+Here, "scalable" means the software can be understood, modified, tested, operated and extended without each change multiplying fragility.
 
 ## 12. Validate and canonicalize once at boundaries
 
-Treat user input, files, APIs, tool output, environment values and external protocol payloads as untrusted until they have crossed an explicit validation boundary.
+Treat imported workbooks, user input, tool output and external payloads as untrusted until they cross an explicit validation boundary. Validate structural and semantic requirements as early as practical, then carry the validated representation forward instead of rematching or renormalizing the same durable fact in multiple layers.
 
-Validate structural and semantic requirements as early as practical, then carry the validated/canonical representation forward. Do not independently rediscover, rematch or renormalize the same durable fact in multiple layers with subtly different rules.
+When aliases or identifiers can map to one canonical entity, ambiguous matches fail closed. Preserve source identity/provenance when diagnostics, audit or round-trip behavior requires it.
 
-When aliases, names or identifiers may map to one canonical entity, resolve them once. Ambiguous matches must fail explicitly rather than silently selecting the first plausible candidate.
+## 13. Configuration must be reproducible
 
-Preserve original identity/provenance when it is needed for diagnostics, audit or round-tripping; canonicalization must not erase evidence required to explain what was received.
+Behavior-affecting configuration must be explicit, inspectable and reproducible from repository state plus separately supplied credentials. Do not make correctness depend on undocumented global plugins, inherited shell state or hidden home-directory mutations. Required configuration that is stale, incompatible or missing must fail visibly rather than silently selecting another execution mode.
 
-## 13. Configuration and environment must be reproducible
+## 14. User-facing changes remain operable and accessible
 
-Behavior-affecting configuration should be explicit, inspectable and reproducible without copying an opaque machine or home directory.
-
-Prefer secret-free desired-state configuration plus separately supplied credentials over undocumented global mutations, inherited shell variables or ambient defaults.
-
-If runtime behavior materially depends on a profile, feature flag, environment variable or compatibility override, make that dependency discoverable and verifiable before execution.
-
-Temporary configuration overrides must state why they exist, what evidence qualified them and what condition retires them.
-
-Fail visibly when required configuration is stale, incompatible or missing; do not silently fall back to a materially different execution mode.
-
-## 14. User-facing interfaces must remain operable and accessible
-
-When a change affects a user-facing interface, accessibility is part of correctness rather than optional polish.
-
-Prefer semantic controls and native interaction behavior. Preserve keyboard operability, visible focus, meaningful labels, readable error/state communication and layouts that do not require color alone to convey meaning.
-
-Respect user motion/reduced-motion preferences when motion is introduced, and avoid introducing horizontal overflow or interaction traps without a justified product requirement.
-
-Use deterministic accessibility checks where they provide real evidence, but do not treat automated checks as proof of complete accessibility.
+When a change affects UI, accessibility is part of correctness: prefer semantic controls, keyboard-operable interactions, visible focus and meaningful labels/state communication; do not rely on color alone. Use deterministic accessibility checks when they provide useful evidence, but do not treat them as complete proof.
 
 ## Review interpretation
 
-Any adopted reviewer or engineering skill may consume this file as repository-specific standards.
+Any code review (DIA audit, Metis evaluator, second reviewer or manual) checks the change against this file. Repo standards override generic preferences where they conflict. Review does not grant push, PR, merge or deploy authority.
 
-Repo standards here override generic methodology preferences where they conflict. A tool may report against these standards, but this file does not grant that tool execution, publication or merge authority.
+## Project-specific additions
+
+_(Each repo adds its own rules here, numbered from 15.)_
