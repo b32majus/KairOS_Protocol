@@ -128,7 +128,7 @@ En todo KairOS el implementador por defecto es `opencode-go/deepseek-v4.1-flash`
 - El consumo y los límites de OpenCode Go están **sin medir** en KairOS. Las cifras de créditos de NaN (12-11) ya no aplican; si una cifra decide algo, se mira la página de uso de OpenCode Go ese día.
 - El mayor ahorro no vino del modelo, sino de **quitar la delegación**: sin la frase de rol, los subagentes se llevaban ≈60 % de la entrada y ≈77 % de la caché. Por eso la frase de rol es obligatoria.
 - Ningún encargo ha necesitado visión: los checks afirman con DOM y texto.
-- Lo medido viene de Nexus (27-10 a 08-11, con NaN): muestra pequeña. Detalle en `/srv/kairos-lab/control/nexus/MEDICION_MODELOS_20261108.md`.
+- Lo medido viene de Nexus (27-10 a 08-11, con NaN): muestra pequeña. Detalle en `/srv/kairos-lab/proyectos/nexus/MEDICION_MODELOS_20261108.md`.
 
 ### Perfil de la vía Pi
 
