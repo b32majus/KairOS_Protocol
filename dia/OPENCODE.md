@@ -116,6 +116,6 @@ Patrón reutilizable en cualquier proyecto con interfaz: los modelos baratos (me
 
 ## Ejemplos y herramientas (Nexus, solo lectura)
 
-- Skill del ciclo: `/srv/kairos-lab/control/nexus/.claude/skills/encargo-dia/SKILL.md`, con `plantilla_check_navegador.mjs` al lado.
-- Lanzador de checks: `/srv/kairos-lab/control/nexus/bin/run_checks.sh` (un log por check, salida «nombre rc», timeout).
-- Encargos: `/srv/kairos-lab/control/nexus/archivo/planes/PLAN_EJECUTOR_EA_DETALLE_CAUSALIDAD_20261108.md` (código), `..._MORISKY_EXPORT_20261108.md` (arreglo pequeño) y `..._QA676_20261108.md` (check de QA).
+- Skill del ciclo: `/srv/kairos-lab/proyectos/nexus/.claude/skills/encargo-dia/SKILL.md`, con `plantilla_check_navegador.mjs` al lado.
+- Lanzador de checks: `/srv/kairos-lab/proyectos/nexus/bin/run_checks.sh` (un log por check, salida «nombre rc», timeout).
+- Encargos: `/srv/kairos-lab/proyectos/nexus/archivo/planes/PLAN_EJECUTOR_EA_DETALLE_CAUSALIDAD_20261108.md` (código), `..._MORISKY_EXPORT_20261108.md` (arreglo pequeño) y `..._QA676_20261108.md` (check de QA).
