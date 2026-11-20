@@ -25,7 +25,7 @@
 - <Ficheros, módulos o áreas que sí entran.>
 - No tocar: <zonas fuera de alcance, dependencias, configuración, otros repos>.
 - Restricciones del proyecto: <las que apliquen del AGENTS.md del repo destino>.
-- Normas de código: el `CODING_STANDARDS.md` del repo destino, si existe.
+- Normas de código: el `CODING_STANDARDS.md` del repo destino; si no tiene, el común `/srv/kairos-lab/KairOS_Protocol/CODING_STANDARDS.md` (y se avisa a Sil de que falta).
 
 ## Piezas existentes que se deben reutilizar
 
