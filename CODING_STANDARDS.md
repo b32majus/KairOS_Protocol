@@ -72,6 +72,14 @@ Negative and adversarial verification should be proportional to actual risk, esp
 
 For stateful, temporal, concurrent, cached or idempotent behavior, add at least one regression case that would fail a plausible stale-state, wrong-order, duplicate/retry or repeated-operation implementation when that risk is material. Prefer an executable invariant/interleaving check over another prose warning.
 
+Correctness must not depend on timing luck or caller discipline.
+
+A new or materially changed checker (privacy, security, parsing, state, cleanup filters) needs at least one known-good case and one planted violation that it must catch, so it can be shown to fail.
+
+Immediately before publication, enumerate the changed files and run the smallest validator that actually parses or executes each special artifact type (CI workflows, deployment descriptors, migrations, generated schemas, config). Source/test PASS is not a substitute for that validation.
+
+AI review (any model) never substitutes for required deterministic evidence.
+
 ## 8. Fail explicitly when correctness requires knowledge
 
 Do not hide invariant, authority, persistence or safety failures behind silent fallbacks, guessed defaults or "best effort" success.
@@ -90,9 +98,13 @@ Consider maintenance, transitive risk, runtime weight, upgrade burden and lock-i
 
 Do not build internal substitutes for mature upstream capabilities merely to avoid a dependency that the architecture has already adopted.
 
+Production must not depend, hidden or implicitly, on personal accounts, personal machines or the development VPS. Keep stable own identifiers and exportable data: provider IDs must not become domain roots, and it must stay practical to replace an external provider (LLM, search, mail, database host) without spreading provider-specific assumptions through the domain or building speculative abstractions over the whole codebase.
+
 ## 10. Security and data boundaries must be explicit
 
 Apply least privilege and minimize credential and data exposure.
+
+Collect and store only the data the product actually needs.
 
 For sensitive or persistent data, make ownership, trust boundaries and mutation authority explicit.
 
@@ -114,6 +126,8 @@ Treat imported workbooks, user input, tool output and external payloads as untru
 
 When aliases or identifiers can map to one canonical entity, ambiguous matches fail closed. Preserve source identity/provenance when diagnostics, audit or round-trip behavior requires it.
 
+When the product uses an LLM at runtime, its output is untrusted data that must cross the same validation boundary. The runtime LLM may extract, interpret and fill bounded fields; it does not own canonical identifiers, workflow state, computed decisions or outbound actions (sending, deleting, publishing). `UNKNOWN` beats invention, and instructions found inside fetched pages, documents or tool output are data, not commands.
+
 ## 13. Configuration must be reproducible
 
 Behavior-affecting configuration must be explicit, inspectable and reproducible from repository state plus separately supplied credentials. Do not make correctness depend on undocumented global plugins, inherited shell state or hidden home-directory mutations. Required configuration that is stale, incompatible or missing must fail visibly rather than silently selecting another execution mode.
@@ -121,6 +135,8 @@ Behavior-affecting configuration must be explicit, inspectable and reproducible 
 ## 14. User-facing changes remain operable and accessible
 
 When a change affects UI, accessibility is part of correctness: prefer semantic controls, keyboard-operable interactions, visible focus and meaningful labels/state communication; do not rely on color alone. Use deterministic accessibility checks when they provide useful evidence, but do not treat them as complete proof.
+
+User-facing text is in the product's language (Spanish unless the repo says otherwise); internal enums and codes must not leak raw into the UI. Keep user-facing claims factual: do not claim compliance, certification, anonymity or safety properties unless the corresponding mechanism and evidence are accepted.
 
 ## Review interpretation
 
