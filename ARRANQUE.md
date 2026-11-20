@@ -19,7 +19,7 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
   - Contra el abuso: cada directo se anota en el registro de calidad (§6), y en la duda entre directo y DIA, es DIA.
 - **DIA** (`dia/README.md`): trabajo atendido, pequeño o mediano, en un solo repo.
   - *Diseñar*: Cora o Claude redactan con Sil un documento de tarea (`dia/PLANTILLA_TAREA.md`) de una página como máximo, con 5 a 10 criterios.
-  - *Implementar*: con modelos de NaN, en una rama y un worktree propios, por una de dos vías: Pi con ODD (deja un `ESTADO.md`) u OpenCode directo con un encargo estricto (`dia/OPENCODE.md`). La vía la elige el modelo que lidera el proyecto con Sil, según la tarea (`dia/README.md`, «Elegir la vía»).
+  - *Implementar*: con modelos de OpenCode Go, en una rama y un worktree propios, por una de dos vías: Pi con ODD (deja un `ESTADO.md`) u OpenCode directo con un encargo estricto (`dia/OPENCODE.md`). La vía la elige el modelo que lidera el proyecto con Sil, según la tarea (`dia/README.md`, «Elegir la vía»).
   - *Auditar*: quien **no** implementó, con la lista de `dia/README.md`. Veredicto OK o REHACER.
 - **Metis** (`metis/README.md`): trabajo grande o de riesgo, desatendido hasta el PR.
   - Se elige la vía al empezar: si una unidad no merece una referencia privada, tampoco merece Metis y va por DIA.

@@ -1,12 +1,12 @@
 # DIA · vía OpenCode directo
 
-Variante de la fase Implementar de DIA (`dia/README.md`) sin Pi ni ODD: quien diseña escribe el test RED y un encargo estricto, y un modelo de NaN lo ejecuta con `opencode run`. El resto de DIA (situación de partida, línea base, auditoría, una sola revisión, GO) no cambia.
+Variante de la fase Implementar de DIA (`dia/README.md`) sin Pi ni ODD: quien diseña escribe el test RED y un encargo estricto, y un modelo de OpenCode Go lo ejecuta con `opencode run`. El resto de DIA (situación de partida, línea base, auditoría, una sola revisión, GO) no cambia.
 
 En esta vía, el encargo sustituye al documento de tarea y a `ESTADO.md`: el informe es la respuesta de ≤12 líneas del implementador más el diff.
 
 ## Requisitos
 
-- OpenCode con el proveedor `nan` configurado: `opencode models | grep nan` lista los ids.
+- OpenCode con el proveedor `opencode-go` conectado (`opencode auth list` lo muestra como «stored»); `opencode models | grep opencode-go` lista los ids.
 - Un worktree y una rama propios para el tramo.
 - Si `opencode run` se queda colgado contra un `opencode serve` en segundo plano, se lanza con `--standalone`.
 
@@ -67,14 +67,14 @@ Antes de lanzar, se pasan los checks vecinos sobre el worktree sin tocar (`dia/R
 El rol de implementador y la prohibición de delegar van **en la propia orden**, no solo en el encargo. Es el fallo más caro visto: el modelo lanza un «implementador» aparte o se cree coordinador y termina sin tocar nada. Medido en Nexus, esa capa de delegación se llevaba ≈60 % de la entrada y ≈77 % de la caché.
 
 ```
-cd <worktree> && opencode run -m nan/deepseek-v4-flash "Eres el implementador. Edita tú mismo los ficheros; PROHIBIDO delegar, lanzar subagentes o revisiones. Tu rol en esta sesión es IMPLEMENTADOR, no coordinador. Lee y ejecuta el encargo de <ruta absoluta del encargo>" > <ruta ABSOLUTA del log> 2>&1
+cd <worktree> && opencode run -m opencode-go/deepseek-v4.1-flash "Eres el implementador. Edita tú mismo los ficheros; PROHIBIDO delegar, lanzar subagentes o revisiones. Tu rol en esta sesión es IMPLEMENTADOR, no coordinador. Lee y ejecuta el encargo de <ruta absoluta del encargo>" > <ruta ABSOLUTA del log> 2>&1
 ```
 
 - Si el repo tiene un `AGENTS.md` con agentes coordinadores, se nombra en la frase el agente implementador que corresponda (por ejemplo, en repos con Atenea: «IMPLEMENTADOR (atenea-implementer-volume)»).
-- El modelo por defecto es `nan/deepseek-v4-flash`; los cambios de modelo siguen `dia/README.md`, Modelos.
+- El modelo por defecto es `opencode-go/deepseek-v4.1-flash`; los cambios de modelo siguen `dia/README.md`, Modelos.
 - Desde Claude Code: Bash con `run_in_background`, con `opencode` como proceso principal. Nunca `nohup`, `&` ni subshell: así Sil lo ve y llega el aviso de fin.
 - Dentro de herdr (VPS), mejor en un panel visible al lado de la sesión: `HERDR.md`, patrón 1.
-- Varios encargos en paralelo: una llamada en segundo plano por encargo, respetando 7 peticiones simultáneas por modelo.
+- Varios encargos en paralelo: una llamada en segundo plano por encargo. Los límites de concurrencia de OpenCode Go están sin medir: si da errores de límite, se lanzan menos a la vez.
 - No se vigila con `pgrep -f` ni con bucles `while`: se encuentra a sí mismo y no termina. Se espera el aviso de fin.
 
 ## 5. Auditar
@@ -97,12 +97,12 @@ En tareas **sensibles**, se añade a esa misma orden, antes de «Responde en ≤
 Además, ATACA lo que toca el diff como lo haría alguien con malas intenciones, solo en local y con datos sintéticos, sin editar nada: entra sin sesión o con un usuario pide datos de otro; prueba contraseñas o códigos sin límite; intenta saltarte cada regla de negocio por otra vía que no sea el botón; mete en cada entrada texto muy largo, HTML, <script>, caracteres especiales y números en el límite; busca claves, contraseñas o datos reales en el código, en lo publicado y en lo que llega al navegador. Puedes arrancar la app en local y mandarle peticiones; di qué intentaste aunque no encuentres nada.
 ```
 
-- Si el auditor es Cora o no hay OpenAI, se cambia `-m` por el modelo de NaN que no implementó.
+- Si el auditor es Cora o no hay OpenAI, se cambia `-m` por el modelo de OpenCode Go que no implementó.
 - Tras la revisión, `git status` del worktree debe seguir igual. Si cambió, se descarta su informe y se avisa a Sil.
 
 ## 6. Documentos mecánicos
 
-Contratos, filas de decisiones, descripción de la PR y similares pueden ir a NaN (`nan/mimo-v2.6-flash`, el más barato, o `nan/deepseek-v4-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
+Contratos, filas de decisiones, descripción de la PR y similares pueden ir a OpenCode Go (`opencode-go/mimo-v2.6-flash`, el más barato en NaN, o `opencode-go/deepseek-v4.1-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
 
 ## 7. Cerrar el tramo
 
@@ -112,7 +112,7 @@ Contratos, filas de decisiones, descripción de la PR y similares pueden ir a Na
 
 ## QA con checks de navegador
 
-Patrón reutilizable en cualquier proyecto con interfaz: los modelos de NaN escriben bien checks de navegador de **solo lectura** (Playwright headless). Cada check imprime OK, FALLO, INFO o NOTA, afirma con DOM y texto, y las capturas son solo para humanos. En Nexus cerraron un lote de QA en un día; solo quedó manual un ticket de criterio humano.
+Patrón reutilizable en cualquier proyecto con interfaz: los modelos baratos (medido con NaN, mismos modelos que OpenCode Go) escriben bien checks de navegador de **solo lectura** (Playwright headless). Cada check imprime OK, FALLO, INFO o NOTA, afirma con DOM y texto, y las capturas son solo para humanos. En Nexus cerraron un lote de QA en un día; solo quedó manual un ticket de criterio humano.
 
 ## Ejemplos y herramientas (Nexus, solo lectura)
 

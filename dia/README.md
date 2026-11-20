@@ -21,7 +21,7 @@ La elige el modelo que lidera el proyecto con Sil (Claude o Cora), según la tar
 | Fase | Quién | Responsabilidad |
 | --- | --- | --- |
 | Diseñar | Claude Code o Cora (ChatGPT), con Sil | Acuerdan el comportamiento esperado y escriben el documento de tarea (vía Pi) o el test RED y el encargo (vía OpenCode). |
-| Implementar | Pi con `gentle-pi` (ODD) u OpenCode directo, con modelos baratos de NaN | Ejecuta el documento o el encargo en una rama y un worktree propios. |
+| Implementar | Pi con `gentle-pi` (ODD) u OpenCode directo, con modelos baratos de OpenCode Go | Ejecuta el documento o el encargo en una rama y un worktree propios. |
 | Auditar | Claude o Cora, siempre quien **no** implementó | Aplica la lista de auditoría y responde OK o REHACER. |
 
 Que audite alguien que no implementó evita que el mismo criterio valide su propio trabajo. El test que hace de contrato tampoco lo audita quien lo escribió: en la vía OpenCode lo escribe quien diseña y el implementador no puede tocarlo; en la vía Pi lo escribe ODD a partir de criterios verificables y lo revisa el auditor.
@@ -53,8 +53,8 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 Forma parte de **la misma** auditoría, no es una ronda extra: sus hallazgos entran en el único veredicto OK o REHACER.
 
 - **Modelo de otra familia** que el implementador y que el auditor, para que no compartan puntos ciegos:
-  - por defecto `openai/gpt-6.2-sol` en OpenCode (suscripción de OpenAI, cuota fija, no gasta créditos de NaN);
-  - si el auditor es Cora (también OpenAI), o OpenAI no está disponible: el modelo de NaN que no implementó (`nan/glm5.3-flash` si implementó deepseek, y al revés).
+  - por defecto `openai/gpt-6.2-sol` en OpenCode (suscripción de OpenAI, cuota fija);
+  - si el auditor es Cora (también OpenAI), o OpenAI no está disponible: el modelo de OpenCode Go que no implementó (`opencode-go/glm-5.3-flash` si implementó deepseek, y al revés).
 - **Ciego**: recibe los criterios, el encargo o documento de tarea y el diff. Nunca la auditoría ni las conclusiones de quien diseñó.
 - **Solo lectura**: no edita ni arregla. Orden de lanzamiento en `dia/OPENCODE.md` §5.
 - El auditor comprueba cada hallazgo en el código: los confirmados van al REHACER; los descartados se anotan en una línea con el motivo.
@@ -104,63 +104,50 @@ Tras **dos REHACER seguidos de la misma tarea**: parar y avisar a Sil. Puede que
 
 ## Modelos
 
-### Implementador por defecto: `nan/deepseek-v4-flash`
+### Implementador por defecto: `opencode-go/deepseek-v4.1-flash`
 
-En todo KairOS el implementador por defecto es `nan/deepseek-v4-flash`, que en NaN sirve DeepSeek V4.1 Flash (1017). Con una orden bien especificada rinde como `glm5.3-flash` y suele costar menos créditos, porque su caché leída cuesta 5 veces menos y es lo que más pesa (la caché leída es 15–25 veces la entrada). Su fallo conocido es despistarse de rol: leer el `AGENTS.md` de un repo con agentes coordinadores, creerse coordinador y no editar nada. Para evitarlo, siempre:
+Desde el 20-11 los modelos baratos se usan por **OpenCode Go** (proveedor `opencode-go`), con los mismos modelos que antes daba NaN; la suscripción a NaN está cancelada.
+
+En todo KairOS el implementador por defecto es `opencode-go/deepseek-v4.1-flash` (DeepSeek V4.1 Flash). Con una orden bien especificada rinde como `glm-5.3-flash`. Su fallo conocido es despistarse de rol: leer el `AGENTS.md` de un repo con agentes coordinadores, creerse coordinador y no editar nada. Para evitarlo, siempre:
 
 - el rol y la prohibición de delegar van **en la propia orden de lanzamiento** (texto literal en `dia/OPENCODE.md`);
 - el encargo sigue la plantilla estricta: qué se puede tocar, qué no (STOP), pasos con nombres exactos, un comando de comprobación, máximo 3 intentos y respuesta de ≤12 líneas;
-- si termina sin cambios o se pone a coordinar: se relanza una vez y después se pasa a `nan/glm5.3-flash`.
+- si termina sin cambios o se pone a coordinar: se relanza una vez y después se pasa a `opencode-go/glm-5.3-flash`.
 
-### Resto de modelos de NaN
+### Resto de modelos de OpenCode Go
 
 | Modelo | Uso |
 | --- | --- |
-| `nan/glm5.3-flash` | Alternativa para código: ligeramente más fiable (en Nexus nunca delegó y acertó a la primera en tramos de 1 a 3 funcionalidades). Se usa cuando deepseek falla dos veces o el tramo tiene mucha lógica. |
-| `nan/mimo-v2.6-flash` | Tareas pequeñas, exploración y documentos mecánicos a partir de un diff y un patrón fijo (descripción de PR, contrato, fila de decisiones). Es el más barato en créditos. |
-| `nan/qwen3.8-flash` | También vale para documentos mecánicos y resúmenes, pero cuesta más que mimo y que deepseek. |
-| `nan/gemma4` | Pruebas y tareas mínimas. Su precio en créditos está sin verificar. |
-| `nan/glm5.3` (full) y `nan/kimi-k3.1-pro` | Unas 10 y 20 veces más caros con los mismos tokens. Decisión de Sil (12-11): no usarlos salvo justificación clara. |
-| `nan/qwen3.6` | Antigua. No usar. |
+| `opencode-go/glm-5.3-flash` | Alternativa para código: ligeramente más fiable (en Nexus nunca delegó y acertó a la primera en tramos de 1 a 3 funcionalidades). Se usa cuando deepseek falla dos veces o el tramo tiene mucha lógica. |
+| `opencode-go/mimo-v2.6-flash` | Tareas pequeñas, exploración y documentos mecánicos a partir de un diff y un patrón fijo (descripción de PR, contrato, fila de decisiones). Era el más barato en NaN. |
+| `opencode-go/qwen3.8-flash` | También vale para documentos mecánicos y resúmenes. |
+| `opencode-go/glm-5.3` (full) y `opencode-go/kimi-k3.1-pro` | En NaN costaban unas 10 y 20 veces más con los mismos tokens. Decisión de Sil (12-11): no usarlos salvo justificación clara. |
 
-### Coste en créditos
+### Coste
 
-Desde el 12-11, NaN cobra en **créditos**, no en cuota mensual por modelo. El plan de 70 € da 7.000 créditos al mes. Créditos por millón de tokens (fuente: tabla de `cloud.nan.builders/tokens`, 12-11):
-
-| Modelo | Entrada | Caché | Salida |
-| --- | --- | --- | --- |
-| `deepseek-v4-flash` | 10,5 | 0,21 | 42 |
-| `glm5.3-flash` | 5,25 | 1,05 | 17,5 |
-| `mimo-v2.6-flash` | 7 | 0,14 | 14 |
-| `qwen3.8-flash` | 7,5 | 0,8 | 23,5 |
-| `glm5.3` (full) | 49 | 9,1 | 154 |
-| `kimi-k3.1-pro` | 100 | 10 | 500 |
-
-- Los precios cambian: si una cifra decide algo, se mira la tabla de NaN ese día.
-- Orden de magnitud (tokens medidos en Nexus el 08-11, 19 sesiones): unos 46 créditos el día entero, menos del 1 % del plan; un encargo S cuesta 0,5–1,5 créditos.
+- El consumo y los límites de OpenCode Go están **sin medir** en KairOS. Las cifras de créditos de NaN (12-11) ya no aplican; si una cifra decide algo, se mira la página de uso de OpenCode Go ese día.
 - El mayor ahorro no vino del modelo, sino de **quitar la delegación**: sin la frase de rol, los subagentes se llevaban ≈60 % de la entrada y ≈77 % de la caché. Por eso la frase de rol es obligatoria.
-- Concurrencia: 7 peticiones simultáneas por modelo y 60 por minuto por clave.
 - Ningún encargo ha necesitado visión: los checks afirman con DOM y texto.
-- Lo medido viene de Nexus (27-10 a 08-11): muestra pequeña. Detalle en `/srv/kairos-lab/control/nexus/MEDICION_MODELOS_20261108.md`.
+- Lo medido viene de Nexus (27-10 a 08-11, con NaN): muestra pequeña. Detalle en `/srv/kairos-lab/control/nexus/MEDICION_MODELOS_20261108.md`.
 
 ### Perfil de la vía Pi
 
-Perfil `nan-reparto` de gentle-pi (2026-10-24):
+Perfil `go-sprint` de gentle-pi (activo desde el 20-11; mismo reparto que el antiguo `nan-reparto`):
 
 | Rol | Modelo |
 | --- | --- |
-| orquestador y worker | `nan/deepseek-v4-flash` (thinking high) |
-| fix-agent y judge-a | `nan/glm5.3-flash` |
-| explore | `nan/mimo-v2.6-flash` |
-| verify | `nan/qwen3.8-flash` |
+| orquestador y worker | `opencode-go/deepseek-v4.1-flash` (thinking high) |
+| fix-agent y judge-a | `opencode-go/glm-5.3-flash` |
+| explore | `opencode-go/mimo-v2.6-flash` |
+| verify | `opencode-go/qwen3.8-flash` |
 | judge-b y revisores | `openai-codex/gpt-6-luna` |
 | review-risk | `openai-codex/gpt-6.1-sol` |
 
-La fuente de verdad es `~/.pi/gentle-ai/models.json`. Se cambia con `/gentle:profiles` dentro de Pi (desde gentle-pi 4.5; `/gentle:models` ya no existe), no editando los `.md` de agentes.
+La fuente de verdad es `~/.pi/gentle-ai/models.json` (lo que Pi aplica); `profiles.json` guarda los perfiles. Se cambia con `/gentle:profiles` dentro de Pi (desde gentle-pi 4.5; `/gentle:models` ya no existe), no editando los `.md` de agentes.
 
 ## GGA
 
-GGA (el revisor de commits de gentle-ai) es **opcional**. Si se usa, su proveedor es `opencode:nan/glm5.3-flash`, nunca Claude.
+GGA (el revisor de commits de gentle-ai) es **opcional**. Si se usa, su proveedor es `opencode:opencode-go/glm-5.3-flash`, nunca Claude.
 
 ## Ejemplos
 
