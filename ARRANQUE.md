@@ -24,7 +24,7 @@ Antes de nada, lee `PROTOCOLOS.md` y elige **un** protocolo para este trabajo. N
 - **Metis** (`metis/README.md`): trabajo grande o de riesgo, desatendido hasta el PR.
   - Se elige la vía al empezar: si una unidad no merece una referencia privada, tampoco merece Metis y va por DIA.
   - Unidades verticales: cada una lleva dominio, pantalla y test de recorrido juntos, no microreglas sueltas.
-  - Versión en uso: `/srv/kairos-lab/qualification/metis-pilot-9.9`. Usa siempre `--prep-dir` en `train` y `train-resume`.
+  - Versión en uso: `/srv/kairos-lab/proyectos/metis/congelada-9.9`. Usa siempre `--prep-dir` en `train` y `train-resume`.
   - Flujo: `plan-units` → `prep-train` → auditoría de la preparación → `train` → PR_READY → merge humano. Camino corto: `prep` + `run`.
   - Si algo falla, se aplica un arreglo acotado (`prep-check` de una unidad, `train-resume`, `--prep-dir`, `portPolicy`, `supersedes`), nunca el protocolo entero: ver «Cuando algo falla» en `metis/README.md`.
 - **Atenea** (`atenea/AGENTS.md`, `atenea/README.md`): el flujo de OpenCode V2 con skills (C-087). Sus documentos siguen en `docs/`, `tools/` y `.opencode/`.
