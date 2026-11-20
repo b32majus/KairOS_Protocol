@@ -12,13 +12,13 @@ Antes de usar herdr desde un agente: `test "${HERDR_ENV:-}" = 1`. Si falla, no s
 
 ## Patrones
 
-### 1. Implementador de NaN en un panel visible (DIA, vía OpenCode)
+### 1. Implementador de OpenCode Go en un panel visible (DIA, vía OpenCode)
 
 Sustituye al «Bash en segundo plano» de `dia/OPENCODE.md` §4: Sil ve al implementador trabajar en directo, junto a la sesión que lo lanzó.
 
 ```bash
 P=$(herdr pane split --current --direction down --cwd <worktree> --no-focus | jq -r '.result.pane.pane_id')
-herdr pane run "$P" 'opencode run -m nan/deepseek-v4-flash "Eres el implementador. … Lee y ejecuta el encargo de <ruta>" > <log absoluto> 2>&1; echo "__FIN rc=$?"'
+herdr pane run "$P" 'opencode run -m opencode-go/deepseek-v4.1-flash "Eres el implementador. … Lee y ejecuta el encargo de <ruta>" > <log absoluto> 2>&1; echo "__FIN rc=$?"'
 herdr pane wait-output "$P" --regex '^__FIN rc=[0-9]+' --timeout 1800000
 ```
 

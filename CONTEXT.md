@@ -64,7 +64,7 @@ C-087 retains the C-086 thin runtime/model/lifecycle shape. Before launch, Cora 
 
 ## Standard writer/context economy
 
-Standard `volume` writes on V4 and standard `complex` writes on GLM 5.3 Flash high. The active OpenCode 2.0.22 runtime gives both long-running NaN writers a 220k effective context budget with automatic compaction and ~15k recent verbatim retention, so pathological agent loops compact around ~198k instead of drifting toward the physical ~1M window. Required evidence is never reduced for token economy.
+Standard `volume` writes on V4 and standard `complex` writes on GLM 5.3 Flash high. The active OpenCode 2.0.22 runtime gives both long-running writers a 220k effective context budget with automatic compaction and ~15k recent verbatim retention, so pathological agent loops compact around ~198k instead of drifting toward the physical ~1M window. Required evidence is never reduced for token economy.
 
 ## Assurance
 
