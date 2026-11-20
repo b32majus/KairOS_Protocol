@@ -2,8 +2,9 @@
 
 Metis es un **arnés ligero para trabajo desatendido**: un orquestador determinista, un writer, un gate determinista y un evaluador. El orquestador no improvisa: ejecuta fases definidas y deja evidencia en disco.
 
-- Código y documentación técnica: `/srv/kairos-lab/qualification/metis-c091-20261019`.
-- Versión congelada en uso: `/srv/kairos-lab/qualification/metis-pilot-9.9` (`node .../bin/metis.mjs`). Los configs con `portPolicy` solo cargan en 9.4 o posteriores.
+- Código y documentación técnica: `/srv/kairos-lab/proyectos/metis/repo`.
+- Versión congelada en uso: `/srv/kairos-lab/proyectos/metis/congelada-9.9` (`node .../bin/metis.mjs`). Los configs con `portPolicy` solo cargan en 9.4 o posteriores.
+- Ejecuciones: dentro de cada proyecto, en `/srv/kairos-lab/proyectos/<proyecto>/metis/`.
 
 ## Flujo largo (una funcionalidad, varias unidades)
 

@@ -30,7 +30,7 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 
 1. **Situación de partida (obligatorio).** Antes de proponer, estimar el tamaño o preguntar nada a Sil, se investiga lo que impacta: issue y PR, `HANDOFF.md`, decisiones y preguntas abiertas del proyecto, contratos, cómo se hace hoy lo más parecido, y quién escribe y quién lee el dato. Si hay un subagente de exploración barato, se le encarga a él y solo se lee uno mismo lo que decide el diseño. Resultado: 3–6 líneas con fuentes. A Sil solo se le pregunta lo que de verdad no esté decidido, diciendo dónde se buscó.
 2. **Documento de tarea o encargo.**
-   - Vía Pi: documento de tarea con `dia/PLANTILLA_TAREA.md`, fuera del repo si el diseñador no puede escribir en él. Por ejemplo: `/srv/kairos-lab/metis-runs/<proyecto>/odd/<tarea>.md`.
+   - Vía Pi: documento de tarea con `dia/PLANTILLA_TAREA.md`, fuera del repo si el diseñador no puede escribir en él. Por ejemplo: `/srv/kairos-lab/proyectos/<proyecto>/metis/odd/<tarea>.md`.
    - Vía OpenCode: test RED y encargo con la plantilla de `dia/OPENCODE.md`.
    - **Tareas M o sensibles: Sil valida los criterios antes de lanzar** (ver «Tamaño y sensibilidad»). Quien diseña le escribe en 5–10 líneas, sin nada técnico, qué debe pasar y qué no debe pasar, como lo vería un usuario. Sil responde «sí», «falta esto» o «no es así». Se lanza solo con su «sí». Es la única comprobación de que se construye lo correcto: ni el test ni los revisores la sustituyen.
 3. **Línea base de checks.** Antes de lanzar, se pasan los checks vecinos sobre el worktree sin tocar. Los que ya fallan se quitan de la lista si fallan por el entorno, o se anotan como «ya fallan antes; no deben empeorar». Así se separan los fallos previos de los que mete el implementador.
@@ -151,5 +151,5 @@ GGA (el revisor de commits de gentle-ai) es **opcional**. Si se usa, su proveedo
 
 ## Ejemplos
 
-- Vía Pi: Nexus, autocompletado CIMA en Validación (2026-10-24): `/srv/kairos-lab/metis-runs/nexus/odd/cima-autocomplete.md`.
+- Vía Pi: Nexus, autocompletado CIMA en Validación (2026-10-24): `/srv/kairos-lab/proyectos/nexus/metis/odd/cima-autocomplete.md`.
 - Vía OpenCode: los ejemplos de encargo están en `dia/OPENCODE.md`.
