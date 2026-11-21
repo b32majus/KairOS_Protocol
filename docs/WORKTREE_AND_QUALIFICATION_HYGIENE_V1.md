@@ -1,7 +1,7 @@
 # Atenea — Worktree and Qualification Hygiene v1
 
 Date: 2026-09-15
-Status: **CURRENT OPERATIONAL POLICY**
+Status: **SUSTITUIDA el 21-11-2026** por la norma global (`/srv/kairos-lab/AGENTS.md`, «Un worktree por tramo») y por `dia/README.md` paso 8. Los criterios de abajo siguen valiendo, pero el GO de «¿lo subo?» ya autoriza borrar el worktree de ese trabajo; no hace falta un GO aparte.
 
 This policy prevents local worktrees, qualification sandboxes and heavyweight runtime copies from becoming permanent VPS state after their durable value has moved to Git/GitHub and Atenea evidence.
 

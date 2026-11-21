@@ -91,6 +91,6 @@ En `~/.config/herdr/config.toml` (copia previa: `config.toml.bak-20261113`): avi
 
 - **Las aprobaciones son de Sil.** Ningún agente responde por otro a un diálogo `blocked` (ni con `agent send-keys` ni con `pane send-keys`).
 - **No se cierra lo ajeno.** Solo se cierran paneles, pestañas y espacios que haya creado el propio agente. Nunca `herdr server stop`, `herdr session stop` ni matar el proceso de herdr: paran todas las sesiones. Es la regla de «no matar procesos ajenos» (`ARRANQUE.md` §4).
-- **Borrar un worktree necesita GO propio**, también con `herdr worktree remove` (`ARRANQUE.md` §4). `--force` y `--trust-repository`, nunca por defecto.
+- **Borrar worktrees:** el del propio tramo, al cerrarlo y si cumple la norma global (PR fusionado, sin cambios, nadie dentro); cualquier otro necesita GO propio, también con `herdr worktree remove` (`ARRANQUE.md` §4). `--force` y `--trust-repository`, nunca por defecto.
 - **Las pantallas son legibles entre sesiones.** Cualquier sesión puede leer la salida de otra: nada de datos reales de pacientes, credenciales ni secretos en ningún panel. `[experimental] pane_history` (guarda la salida en disco) sigue apagado.
 - **Sin robar el foco**: paneles con `--no-focus`, para no mover a Sil de donde está; usar `--current` o IDs explícitos, nunca el panel que tenga el foco.

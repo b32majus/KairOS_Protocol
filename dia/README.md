@@ -40,6 +40,7 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 5. **Auditoría.** Se revisa el resultado con la lista de auditoría. En tareas M o sensibles incluye el segundo revisor (ver «Segundo revisor»).
 6. **Registro de calidad.** Una línea en el registro del proyecto (`ARRANQUE.md` §6).
 7. **Publicar o mezclar.** Solo con GO de Sil; vale el GO en bloque de `ARRANQUE.md` §4. Solo se mezcla con CI en verde.
+8. **Limpiar.** Con el PR fusionado, quien cerró el tramo borra su worktree (`git worktree remove`, sin `--force`) y los temporales de comparación, antes de empezar otro tramo. Si no se puede (cambios sin guardar, alguien dentro), lo dice en el HANDOFF. Comprobación: `/srv/kairos-lab/herramientas/limpiar-worktrees --repo <repo>`.
 
 ## Tamaño y sensibilidad
 
