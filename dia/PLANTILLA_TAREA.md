@@ -31,6 +31,10 @@
 
 <Funciones, componentes, estilos o variables que ya hacen parte de lo pedido, con su ruta. Quien diseña las busca antes de escribir este documento. Si no hay ninguna: «ninguna: se buscó <qué> en <dónde>». Si al implementar parece que algo ya existe y no está aquí, se reutiliza o se para y se avisa; no se crea una copia.>
 
+## Parte visual (solo si la tarea toca pantalla)
+
+<Piezas del catálogo de diseño que se usan, dónde va cada una (con captura o pantalla de referencia) y cómo se ve vacía, cargando, con error y en móvil. Sin estilos, colores ni medidas nuevas. Norma: `PROTOCOLOS.md`, «Trabajo visual».>
+
 ## Criterios de aceptación
 
 Entre 5 y 10, cada uno verificable con un test:

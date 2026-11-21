@@ -52,6 +52,15 @@ Cada rol puede apuntar a un modelo distinto; el writer barato es el que más vol
 
 El evaluador lee el `CODING_STANDARDS.md` del proyecto (`instructions` en el `--repo-config`) y, desde 9.8, busca además código duplicado, abstracciones que el ticket no necesita y comportamiento que el ticket no pide.
 
+## Trabajo visual
+
+Se aplica la norma común de `PROTOCOLOS.md`, «Trabajo visual». En Metis:
+
+- la maqueta y las piezas nuevas se diseñan y Sil las aprueba **antes** de `plan-units`; el writer nunca diseña;
+- cada ticket que toque pantalla lleva su «Parte visual» (piezas del catálogo, dónde van, estados vacío/cargando/error/móvil) y prohíbe estilos, colores o medidas nuevas;
+- el oráculo o el gate incluyen el check de colores y medidas fuera de las variables, y las capturas de las pantallas no tocadas deben salir idénticas;
+- en PR_READY, el modelo fuerte revisa las capturas de lo nuevo antes del merge.
+
 ## Cuándo no usar Metis
 
 Tareas pequeñas o atendidas → **DIA** (`dia/README.md`). Metis tiene sentido cuando el trabajo no se puede atender, dura horas o toca áreas de riesgo y merece oráculos demostrados antes de escribir código.

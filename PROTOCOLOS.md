@@ -24,6 +24,18 @@ En la práctica:
 
 Un mismo proyecto puede usar los tres a lo largo del tiempo. Lo importante es no mezclar sus reglas dentro de una misma ejecución.
 
+## Trabajo visual (DIA y Metis; norma de Sil, 21-11, todos los proyectos)
+
+Los modelos baratos implementan bien, pero no deciden bien cómo se reparte y se ve una pantalla. En lo visual, decide el modelo fuerte y el barato ejecuta; las instrucciones no bastan, hace falta comprobar.
+
+- **Mecánico** (pasar valores sueltos a variables, aplicar un patrón que ya existe): modelo barato.
+- **Diseño** (pantalla nueva o redistribución): el modelo fuerte, o Claude Design, hace una maqueta y Sil la aprueba. Después el barato la copia y se compara su captura con la maqueta. Si falla dos veces, la implementa el fuerte.
+- **Mixto** (función + interfaz: un botón con acción, un buscador, una barra lateral): el barato hace la función y coloca piezas del catálogo de diseño del proyecto (`DESIGN.md` y página de muestra). Si la pieza no existe, primero la diseña el fuerte, Sil la aprueba y entra en el catálogo; se diseña una sola vez.
+- **Comprobación siempre:**
+  - un check rechaza colores o medidas fuera de las variables;
+  - capturas antes/después: lo que no se tocaba debe salir idéntico;
+  - el modelo fuerte revisa la captura de lo nuevo antes de preguntar «¿lo subo?».
+
 ## Dónde vive cada cosa
 
 - `ARRANQUE.md`: prompt de arranque común para cualquier agente (y el prompt de apertura, §7).
