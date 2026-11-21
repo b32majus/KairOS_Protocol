@@ -14,6 +14,7 @@ Metis es un **arnés ligero para trabajo desatendido**: un orquestador determini
 4. **Auditoría de la preparación por Cora**: aprobación antes de gastar writer.
 5. **`train`**: el writer barato implementa; el gate y el evaluador deciden; hay correcciones acotadas.
 6. **PR_READY** y **merge humano**.
+7. **Limpiar**: con el PR fusionado, se borran los worktrees del tren igual que en DIA (`dia/README.md`, paso 8).
 
 Los oráculos comprueban solo el **contrato público** de la unidad (rutas, pantallas, funciones o campos que nombra el ticket), nunca nombres internos que inventó una referencia anterior.
 

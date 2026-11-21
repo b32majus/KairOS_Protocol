@@ -44,7 +44,8 @@ El cuello de botella no son los tests de Metis, sino las rondas de revisión alr
 
 - Sin GO explícito de Sil no se hace push, PR, merge ni deploy.
   - **GO en bloque:** un GO de Sil a una propuesta concreta cubre, para ese trabajo, el push de su rama, el PR, los checks necesarios y el merge si CI está en verde y no hay conflictos.
-  - Siguen necesitando un GO propio: deploy, borrar ramas o worktrees, tags, releases, force-push, cambiar la rama por defecto y tocar el checkout de Sil.
+  - El GO en bloque cubre también borrar el worktree de ese trabajo una vez fusionado (norma global: `/srv/kairos-lab/AGENTS.md`, «Un worktree por tramo»).
+  - Siguen necesitando un GO propio: deploy, borrar ramas, borrar worktrees ajenos al trabajo aprobado, tags, releases, force-push, cambiar la rama por defecto y tocar el checkout de Sil.
   - Las ramas protegidas y las restricciones de cada proyecto siguen mandando. En Metis, el GO en bloque solo cubre el merge si se da después de PR_READY.
 - Las auditorías son de solo lectura. Nunca se lee `reference.patch`.
 - Nada de datos reales de pacientes, credenciales ni secretos.
