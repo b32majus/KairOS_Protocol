@@ -34,6 +34,10 @@ Hacer pasar `<ruta del test o check>` (nuevo). Léelo entero: es el contrato.
 <funciones, componentes, estilos o variables que ya hacen parte de lo pedido, con su ruta. Úsalas tal cual; puedes modificarlas solo si aquí se dice. Si no hay ninguna, escribe «ninguna: se buscó <qué> en <dónde>».>
 Si necesitas algo que no está en esta lista y crees que ya existe, PARA y descríbelo; no crees una copia.
 
+## Parte visual (solo si la tarea toca pantalla)
+<piezas del catálogo de diseño que usa; dónde va cada una, con captura o pantalla de referencia; cómo se ve vacía, cargando, con error y en móvil>
+No crees estilos, colores ni medidas nuevas: solo las variables y piezas del catálogo. Si falta una pieza, PARA y avisa.
+
 ## Lo que NO puedes tocar (STOP si crees que hace falta)
 - Ningún test, check, fixture, documento ni otro fichero. No git. No instales nada.
 - NO lances revisiones, subagentes ni workers: implementa tú y comprueba.
@@ -57,6 +61,11 @@ Antes de lanzar, quien diseña relee el encargo como si fuera el implementador, 
 - no deja decisiones de diseño al implementador: tipo de dato, firma, qué hacer ante un error, qué texto ve el usuario;
 - los ficheros y funciones que cita existen, o están marcados como nuevos;
 - cada pieza nueva que pide (función, componente, estilo) se buscó antes en el repo, y lo que ya existía está en «Piezas existentes que debes reutilizar».
+- si toca pantalla, la «Parte visual» no deja nada por decidir: el implementador coloca piezas aprobadas, no diseña.
+
+## Trabajo visual
+
+Norma común a DIA y Metis: `PROTOCOLOS.md`, «Trabajo visual». En DIA se aplica con la sección «Parte visual» del encargo.
 
 ## 3. Línea base
 
