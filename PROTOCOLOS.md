@@ -35,6 +35,13 @@ Los modelos baratos implementan bien, pero no deciden bien cómo se reparte y se
   - un check rechaza colores o medidas fuera de las variables;
   - capturas antes/después: lo que no se tocaba debe salir idéntico;
   - el modelo fuerte revisa la captura de lo nuevo antes de preguntar «¿lo subo?».
+- **Evitar el aspecto «hecho con IA»** (norma de Sil, 22-11, todos los proyectos). Sil lo rechaza por sistema:
+  - raya gruesa de color en el lado de una tarjeta o aviso (usa borde fino uniforme del color del estado, fondo suave y texto que diga el estado);
+  - degradados sin motivo, cristal translúcido (glassmorphism) y sombras exageradas;
+  - emojis como iconos;
+  - decoración que no lleva información.
+  Estilo por defecto: sobrio, institucional, pocas piezas y siempre las mismas. Un color solo se usa para lo que significa en ese proyecto (en Nexus, por ejemplo, el verde nunca va en botones). El color nunca es la única señal.
+- **Cada proyecto con interfaz tiene su `DESIGN.md`** (colores, medidas, tipografía, catálogo de piezas y qué pieza usar para cada cosa) en la raíz de su repo, y el agente lo lee antes de tocar pantallas. Las reglas del proyecto mandan sobre las de aquí en colores y medidas; esta lista de «evitar» vale siempre. Si el proyecto no lo tiene, lo escribe primero el modelo fuerte con Sil.
 
 ## Dónde vive cada cosa
 
