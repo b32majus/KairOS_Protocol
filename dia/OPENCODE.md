@@ -8,7 +8,7 @@ En esta vía, el encargo sustituye al documento de tarea y a `ESTADO.md`: el inf
 
 - OpenCode con el proveedor `opencode-go` conectado (`opencode auth list` lo muestra como «stored»); `opencode models | grep opencode-go` lista los ids.
 - Un worktree y una rama propios para el tramo.
-- Si `opencode run` se queda colgado contra un `opencode serve` en segundo plano, se lanza con `--standalone`.
+- Si `opencode run` se queda colgado contra un `opencode serve` en segundo plano, se lanza con `--standalone`. Otras trampas de ejecución (PATH, plazos, Pi, perfiles): `PROTOCOLOS.md`, «Lanzar agentes».
 
 ## 1. Test RED
 

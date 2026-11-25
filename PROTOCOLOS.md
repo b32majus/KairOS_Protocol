@@ -43,6 +43,18 @@ Los modelos baratos implementan bien, pero no deciden bien cómo se reparte y se
   Estilo por defecto: sobrio, institucional, pocas piezas y siempre las mismas. Un color solo se usa para lo que significa en ese proyecto (en Nexus, por ejemplo, el verde nunca va en botones). El color nunca es la única señal.
 - **Cada proyecto con interfaz tiene su `DESIGN.md`** (colores, medidas, tipografía, catálogo de piezas y qué pieza usar para cada cosa) en la raíz de su repo, y el agente lo lee antes de tocar pantallas. Las reglas del proyecto mandan sobre las de aquí en colores y medidas; esta lista de «evitar» vale siempre. Si el proyecto no lo tiene, lo escribe primero el modelo fuerte con Sil.
 
+## Lanzar agentes: trampas conocidas (25-11-2026)
+
+Se aprendieron al recuperar la ejecución de agentes desde ChatGPT/Hermes. Valen para todos los proyectos.
+
+- **Éxito = resultado, no código 0.** Un agente que sale con 0 puede no haber entregado nada. Un revisor debe devolver una línea `DICTAMEN: OK` o `DICTAMEN: REHACER`; sin ella, la revisión no existe.
+- **Ejecutables.** `opencode`, `pi` y `codex` viven en `~/.npm-global/bin`. Las shells sin terminal (Hermes, conectores) lo ven solo por `~/.profile`; `~/.bashrc` sale pronto. Dentro de herdr, `HERDR_ENV=1`; fuera es vacío y es normal: no se fuerza.
+- **OpenCode 2.4.x.** `opencode models` no admite proveedor (usar `opencode models | grep opencode-go`). Para scripts: `opencode run --standalone --archived -m opencode-go/<modelo> -f <paquete> "<prompt>"`; `--agent plan` deja la revisión en solo lectura. Una revisión real tarda 3-4 minutos: plazo de al menos 300 s.
+- **Pi.** Arranque normal ~8 s (con red); en scripts, `PI_OFFLINE=1`. Revisión de solo lectura: `pi -p --no-session -t read,grep,find,ls ...`. Nunca `--no-tools`/`-nt` con DeepSeek: devuelve sus llamadas como texto (`<｜DSML｜ ...>`) sin dictamen.
+- **Perfil gentle-ai.** Cada repo puede fijar un perfil (pin local en `<git-dir>/gentle-ai/profile-pin.json` o `.pi/gentle-ai/profile.json`) que pisa al activo. El perfil vigente es `go-sprint`; un pin a `native-*` o `nan-*` (NaN, cancelado) da `401 Invalid API key`.
+- **Modelos de OpenAI.** Solo por OpenCode (`openai/gpt-6.2-sol`) o Pi (`openai-codex/gpt-6.2-sol`), con la suscripción de Sil ya cargada. Codex CLI no, salvo GO. Hay tres instalaciones de `codex`; la válida es la de `~/.npm-global/bin`.
+- **Afirmaciones sobre navegadores.** Un revisor que afirme un comportamiento de CSS (por ejemplo, qué hace `container-type` con `position: fixed`) debe medirlo en Chromium y Firefox con Playwright antes de dar un hallazgo como bloqueante.
+
 ## Dónde vive cada cosa
 
 - `ARRANQUE.md`: prompt de arranque común para cualquier agente (y el prompt de apertura, §7).
