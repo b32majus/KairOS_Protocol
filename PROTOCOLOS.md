@@ -54,6 +54,7 @@ Se aprendieron al recuperar la ejecución de agentes desde ChatGPT/Hermes. Valen
 - **Perfil gentle-ai.** Cada repo puede fijar un perfil (pin local en `<git-dir>/gentle-ai/profile-pin.json` o `.pi/gentle-ai/profile.json`) que pisa al activo. El perfil vigente es `go-sprint`; un pin a `native-*` o `nan-*` (NaN, cancelado) da `401 Invalid API key`.
 - **Modelos de OpenAI.** Solo por OpenCode (`openai/gpt-6.2-sol`) o Pi (`openai-codex/gpt-6.2-sol`), con la suscripción de Sil ya cargada. Codex CLI no, salvo GO. Hay tres instalaciones de `codex`; la válida es la de `~/.npm-global/bin`.
 - **Afirmaciones sobre navegadores.** Un revisor que afirme un comportamiento de CSS (por ejemplo, qué hace `container-type` con `position: fixed`) debe medirlo en Chromium y Firefox con Playwright antes de dar un hallazgo como bloqueante.
+- **QA de uso con navegador real (Hermes).** Para probar una app como lo haría una persona: `hermes chat --oneshot -t browser,terminal -s dogfood --query-file ENCARGO.md --format stream-json`. Hace falta `terminal` en la sesión (sin él Hermes oculta `browser_exec`) y `browser-harness` en el venv de Hermes. Una copia desechable de la app, una sola tanda a la vez (matar el cliente no para al agente), 3 tareas por tanda, y éxito = tareas hechas con evidencia, no código 0. Es QA de agente, no validación humana. Guía y causa del fallo del 25-11: `/srv/kairos-lab/docs/QA_EXPLORATORIO_NAVEGADOR.md`.
 
 ## Dónde vive cada cosa
 
