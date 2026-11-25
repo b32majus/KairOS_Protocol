@@ -79,7 +79,7 @@ El rol de implementador y la prohibición de delegar van **en la propia orden**,
 cd <worktree> && opencode run -m opencode-go/deepseek-v4.1-flash "Eres el implementador. Edita tú mismo los ficheros; PROHIBIDO delegar, lanzar subagentes o revisiones. Tu rol en esta sesión es IMPLEMENTADOR, no coordinador. Lee y ejecuta el encargo de <ruta absoluta del encargo>" > <ruta ABSOLUTA del log> 2>&1
 ```
 
-- Si el repo tiene un `AGENTS.md` con agentes coordinadores, se nombra en la frase el agente implementador que corresponda (por ejemplo, en repos con Atenea: «IMPLEMENTADOR (atenea-implementer-volume)»).
+- Si el repo tiene un `AGENTS.md` con agentes coordinadores, se nombra en la frase el rol (implementador) y se le prohíbe delegar; ya no se usan agentes `atenea-*` (retirados el 25-11).
 - El modelo por defecto es `opencode-go/deepseek-v4.1-flash`; los cambios de modelo siguen `dia/README.md`, Modelos.
 - Desde Claude Code: Bash con `run_in_background`, con `opencode` como proceso principal. Nunca `nohup`, `&` ni subshell: así Sil lo ve y llega el aviso de fin.
 - Dentro de herdr (VPS), mejor en un panel visible al lado de la sesión: `HERDR.md`, patrón 1.
@@ -111,7 +111,7 @@ Además, ATACA lo que toca el diff como lo haría alguien con malas intenciones,
 
 ## 6. Documentos mecánicos
 
-Contratos, filas de decisiones, descripción de la PR y similares pueden ir a OpenCode Go (`opencode-go/mimo-v2.6-flash`, el más barato, o `opencode-go/deepseek-v4.1-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
+Contratos, filas de decisiones, descripción de la PR y similares pueden ir a OpenCode Go (`opencode-go/deepseek-v4.1-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
 
 ## 7. Cerrar el tramo
 

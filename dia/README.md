@@ -129,9 +129,9 @@ En todo KairOS el implementador por defecto es `opencode-go/deepseek-v4.1-flash`
 | Modelo | Uso |
 | --- | --- |
 | `opencode-go/glm-5.3-flash` | Alternativa para código: ligeramente más fiable (en Nexus nunca delegó y acertó a la primera en tramos de 1 a 3 funcionalidades). Se usa cuando deepseek falla dos veces o el tramo tiene mucha lógica. |
-| `opencode-go/mimo-v2.6-flash` | Tareas pequeñas, exploración y documentos mecánicos a partir de un diff y un patrón fijo (descripción de PR, contrato, fila de decisiones). Es el más barato de la lista. |
-| `opencode-go/qwen3.8-flash` | También vale para documentos mecánicos y resúmenes. |
-| `opencode-go/glm-5.3` (full) y `opencode-go/kimi-k3.1-pro` | Costaban unas 10 y 20 veces más que los flash con los mismos tokens (medido en NaN, 12-11). Decisión de Sil (12-11): no usarlos salvo justificación clara. |
+| `opencode-go/deepseek-v4.1-flash` | También para explorar (lectura y búsqueda con el rol de solo lectura en la orden) y para documentos mecánicos a partir de un diff y un patrón fijo (descripción de PR, contrato, fila de decisiones). Es el modelo con más margen del plan (unas 43.000 peticiones cada 5 h, 100 $ al mes), y si explora y luego implementa se reutiliza la caché. |
+| `opencode-go/glm-5.3` (full) | Tramos complejos, **a probar** (25-11). En OpenCode Go tiene un tope de 200 $ al mes y unas 2.600 peticiones cada 5 h, así que la regla del 12-11 (basada en los precios de NaN) ya no aplica. Medir en un tramo real antes de adoptarlo. |
+| Fuera de uso (25-11) | `mimo-v2.6-flash` y `qwen3.8-flash` (decisión de Sil: no aportan sobre DeepSeek y GLM), `qwen3.6`, `kimi-k3.1-pro` (588 peticiones cada 5 h, poco margen para volumen) y `muse-spark-*-contributor` (obligan a permitir entrenar con las peticiones). |
 
 ### Coste
 
@@ -148,8 +148,8 @@ Perfil `go-sprint` de gentle-pi (activo desde el 20-11):
 | --- | --- |
 | orquestador y worker | `opencode-go/deepseek-v4.1-flash` (thinking high) |
 | fix-agent y judge-a | `opencode-go/glm-5.3-flash` |
-| explore | `opencode-go/mimo-v2.6-flash` |
-| verify | `opencode-go/qwen3.8-flash` |
+| explore | `opencode-go/deepseek-v4.1-flash` |
+| verify | `opencode-go/deepseek-v4.1-flash` |
 | judge-b y revisores | `openai-codex/gpt-6-luna` |
 | review-risk | `openai-codex/gpt-6.2-sol` |
 

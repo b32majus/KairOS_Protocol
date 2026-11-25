@@ -1,6 +1,6 @@
 # KairOS_Protocol — protocolos de trabajo
 
-Este repositorio reúne tres protocolos complementarios para trabajar con agentes de IA sobre código: **DIA**, **Metis** y **Atenea**.
+Este repositorio reúne tres protocolos complementarios para trabajar con agentes de IA sobre código: **DIA**, **Metis** y **Atenea** (este último, histórico desde 10-2026: solo si Sil lo pide expresamente).
 
 Cada protocolo tiene sus propias reglas, fases, modelos y criterios de cierre. Las reglas de uno **no obligan** a los demás: cada trabajo se ejecuta bajo un protocolo concreto y responde a su documento de referencia.
 
@@ -20,7 +20,7 @@ En la práctica:
 - Si cabe en una frase, toca 1–2 archivos y no hay nada que decidir (una errata, un texto, un import, un test roto por un cambio evidente), se hace **directo**.
 - Si la tarea se puede explicar en un documento corto y alguien puede atenderla mientras se ejecuta, es **DIA**.
 - Si el trabajo no se puede atender, dura horas o toca áreas de riesgo, es **Metis**.
-- Si el trabajo va por OpenCode V2 con los agentes y perfiles de este repo, es **Atenea**.
+- Si Sil pide expresamente el flujo de OpenCode V2 con los agentes y perfiles de este repo, es **Atenea** (histórico).
 
 Un mismo proyecto puede usar los tres a lo largo del tiempo. Lo importante es no mezclar sus reglas dentro de una misma ejecución.
 
