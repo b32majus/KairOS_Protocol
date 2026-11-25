@@ -50,3 +50,4 @@ Entre 5 y 10, cada uno verificable con un test:
   - causa o problema encontrado;
   - cambios realizados (ficheros y motivo);
   - tests ejecutados y resultado.
+  - una línea final con el formato `Inicio: <fecha hora> · Cierre: <fecha hora> · Veredicto: OK|REHACER · Vueltas: N`; la rellena el auditor al emitir el veredicto. Sirve para medir el flujo sin adivinar.

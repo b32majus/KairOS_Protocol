@@ -110,6 +110,7 @@ Tras **dos REHACER seguidos de la misma tarea**: parar y avisar a Sil. Puede que
 - **REHACER** lista solo defectos concretos (archivo y qué falla). Tras el arreglo se comprueban **esos defectos**, no se repite la auditoría entera.
 - **No se crean documentos de revisión** (WO, ENMIENDA, REVISION, DICTAMEN, DECISIONES) salvo que Sil los pida. Una decisión de Sil es una línea en el `ESTADO.md` o el `HANDOFF.md`.
 - **No se pide a otro agente** que revise algo ya auditado, salvo que Sil lo pida.
+- **Veredicto medible**: el auditor deja en `ESTADO.md` (o en la respuesta de ≤12 líneas de la vía OpenCode) la línea `Inicio · Cierre · Veredicto: OK|REHACER · Vueltas: N`, para poder contar vueltas y tiempos después.
 
 ## Modelos
 
