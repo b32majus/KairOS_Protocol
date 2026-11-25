@@ -57,6 +57,16 @@ Que audite alguien que no implementó evita que el mismo criterio valide su prop
 - **Sensible**: toca datos clínicos o personales, permisos o autenticación, migraciones o borrados, pagos o envíos a terceros. Si además es grande o desatendido, va a Metis.
 - Se dice el tamaño y si es sensible en la primera respuesta (`ARRANQUE.md` §5). En la duda, se trata como M.
 
+## Quién revisa según el tamaño (norma de Sil, 25-11)
+
+| Tarea | Revisión |
+| --- | --- |
+| Pequeña (S) | Una auditoría, con `openai/gpt-6-luna` y razonamiento alto. |
+| Mediana (M) | El auditor fuerte más un segundo revisor `openai/gpt-6.2-sol`. |
+| Sensible o de riesgo (datos clínicos o personales, permisos, borrados, pagos) | `openai/gpt-6.2-sol` como segundo revisor y, además, el ataque descrito más abajo. |
+
+Luna hace el grueso de las revisiones porque gasta menos cuota de ChatGPT; Sol se reserva para lo que pide el mejor juicio. Es una regla de reparto, no una medición: si en un tramo mediano se revisa a ciegas con los dos, se anota qué encontró cada uno para ajustarla.
+
 ## Segundo revisor (tareas M o sensibles)
 
 Forma parte de **la misma** auditoría, no es una ronda extra: sus hallazgos entran en el único veredicto OK o REHACER.
