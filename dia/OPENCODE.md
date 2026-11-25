@@ -111,7 +111,7 @@ Además, ATACA lo que toca el diff como lo haría alguien con malas intenciones,
 
 ## 6. Documentos mecánicos
 
-Contratos, filas de decisiones, descripción de la PR y similares pueden ir a OpenCode Go (`opencode-go/mimo-v2.6-flash`, el más barato en NaN, o `opencode-go/deepseek-v4.1-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
+Contratos, filas de decisiones, descripción de la PR y similares pueden ir a OpenCode Go (`opencode-go/mimo-v2.6-flash`, el más barato, o `opencode-go/deepseek-v4.1-flash`) con el `git diff` y un patrón fijo; quien diseña revisa el resultado. El test RED y la auditoría no se delegan.
 
 ## 7. Cerrar el tramo
 
@@ -121,7 +121,7 @@ Contratos, filas de decisiones, descripción de la PR y similares pueden ir a Op
 
 ## QA con checks de navegador
 
-Patrón reutilizable en cualquier proyecto con interfaz: los modelos baratos (medido con NaN, mismos modelos que OpenCode Go) escriben bien checks de navegador de **solo lectura** (Playwright headless). Cada check imprime OK, FALLO, INFO o NOTA, afirma con DOM y texto, y las capturas son solo para humanos. En Nexus cerraron un lote de QA en un día; solo quedó manual un ticket de criterio humano.
+Patrón reutilizable en cualquier proyecto con interfaz: los modelos baratos (medido en Nexus con NaN; son los mismos modelos que hoy da OpenCode Go) escriben bien checks de navegador de **solo lectura** (Playwright headless). Cada check imprime OK, FALLO, INFO o NOTA, afirma con DOM y texto, y las capturas son solo para humanos. En Nexus cerraron un lote de QA en un día; solo quedó manual un ticket de criterio humano.
 
 ## Ejemplos y herramientas (Nexus, solo lectura)
 

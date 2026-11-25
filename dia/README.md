@@ -4,6 +4,14 @@ DIA es un protocolo de trabajo **atendido** para tareas pequeñas o medianas en 
 
 La fase Implementar tiene **dos vías**, y las dos son DIA: **Pi con ODD** (`gentle-ai`, dentro de Pi: explora, escribe el test, implementa y verifica) y **OpenCode directo** con un encargo estricto (`dia/OPENCODE.md`). DIA es el protocolo completo: además de la vía, fija roles, documento de tarea, auditoría y publicación.
 
+## Cómo lo usamos por defecto
+
+- El modelo fuerte diseña y audita; un modelo barato implementa. Lo normal es la vía OpenCode directo con el contrato ya escrito; Pi + ODD se usa cuando el implementador tiene que descubrir archivos o escribir el test.
+- ODD no es todo DIA: es solo lo que hace `gentle-ai` dentro de la vía Pi (explorar, escribir el test, implementar y verificar).
+- Un arreglo pequeño y claro no necesita el protocolo entero: se hace directamente. DIA es para tramos medianos o con riesgo, y lo grande o desatendido va a Metis.
+- Exploración: un modelo barato busca y el fuerte lee solo lo que decide el diseño y comprueba por sí mismo los puntos que deciden.
+- Suscripciones (25-11): todo lo barato va por **OpenCode Go** (`opencode-go/...`); los modelos de OpenAI van por la suscripción de ChatGPT, desde OpenCode (`openai/...`) o Pi (`openai-codex/...`). Ambas están iniciadas en OpenCode, Pi y Hermes. NaN ya no existe.
+
 ## Elegir la vía de implementación
 
 La elige el modelo que lidera el proyecto con Sil (Claude o Cora), según la tarea. No es una preferencia fija de Sil ni del proyecto: se decide en cada tarea y se dice en la primera respuesta (`ARRANQUE.md` §5).
@@ -107,7 +115,7 @@ Tras **dos REHACER seguidos de la misma tarea**: parar y avisar a Sil. Puede que
 
 ### Implementador por defecto: `opencode-go/deepseek-v4.1-flash`
 
-Desde el 20-11 los modelos baratos se usan por **OpenCode Go** (proveedor `opencode-go`), con los mismos modelos que antes daba NaN; la suscripción a NaN está cancelada.
+Desde el 20-11 los modelos baratos se usan por **OpenCode Go** (proveedor `opencode-go`), que sustituye a NaN (cancelado). Los modelos de OpenAI van aparte, por la suscripción de ChatGPT.
 
 En todo KairOS el implementador por defecto es `opencode-go/deepseek-v4.1-flash` (DeepSeek V4.1 Flash). Con una orden bien especificada rinde como `glm-5.3-flash`. Su fallo conocido es despistarse de rol: leer el `AGENTS.md` de un repo con agentes coordinadores, creerse coordinador y no editar nada. Para evitarlo, siempre:
 
@@ -120,20 +128,20 @@ En todo KairOS el implementador por defecto es `opencode-go/deepseek-v4.1-flash`
 | Modelo | Uso |
 | --- | --- |
 | `opencode-go/glm-5.3-flash` | Alternativa para código: ligeramente más fiable (en Nexus nunca delegó y acertó a la primera en tramos de 1 a 3 funcionalidades). Se usa cuando deepseek falla dos veces o el tramo tiene mucha lógica. |
-| `opencode-go/mimo-v2.6-flash` | Tareas pequeñas, exploración y documentos mecánicos a partir de un diff y un patrón fijo (descripción de PR, contrato, fila de decisiones). Era el más barato en NaN. |
+| `opencode-go/mimo-v2.6-flash` | Tareas pequeñas, exploración y documentos mecánicos a partir de un diff y un patrón fijo (descripción de PR, contrato, fila de decisiones). Es el más barato de la lista. |
 | `opencode-go/qwen3.8-flash` | También vale para documentos mecánicos y resúmenes. |
-| `opencode-go/glm-5.3` (full) y `opencode-go/kimi-k3.1-pro` | En NaN costaban unas 10 y 20 veces más con los mismos tokens. Decisión de Sil (12-11): no usarlos salvo justificación clara. |
+| `opencode-go/glm-5.3` (full) y `opencode-go/kimi-k3.1-pro` | Costaban unas 10 y 20 veces más que los flash con los mismos tokens (medido en NaN, 12-11). Decisión de Sil (12-11): no usarlos salvo justificación clara. |
 
 ### Coste
 
-- El consumo y los límites de OpenCode Go están **sin medir** en KairOS. Las cifras de créditos de NaN (12-11) ya no aplican; si una cifra decide algo, se mira la página de uso de OpenCode Go ese día.
+- El consumo y los límites de OpenCode Go están **sin medir** en KairOS. Las cifras de créditos de NaN (12-11) no valen para OpenCode Go; si una cifra decide algo, se mira la página de uso de OpenCode Go ese día.
 - El mayor ahorro no vino del modelo, sino de **quitar la delegación**: sin la frase de rol, los subagentes se llevaban ≈60 % de la entrada y ≈77 % de la caché. Por eso la frase de rol es obligatoria.
 - Ningún encargo ha necesitado visión: los checks afirman con DOM y texto.
 - Lo medido viene de Nexus (27-10 a 08-11, con NaN): muestra pequeña. Detalle en `/srv/kairos-lab/proyectos/nexus/MEDICION_MODELOS_20261108.md`.
 
 ### Perfil de la vía Pi
 
-Perfil `go-sprint` de gentle-pi (activo desde el 20-11; mismo reparto que el antiguo `nan-reparto`):
+Perfil `go-sprint` de gentle-pi (activo desde el 20-11):
 
 | Rol | Modelo |
 | --- | --- |
@@ -142,7 +150,7 @@ Perfil `go-sprint` de gentle-pi (activo desde el 20-11; mismo reparto que el ant
 | explore | `opencode-go/mimo-v2.6-flash` |
 | verify | `opencode-go/qwen3.8-flash` |
 | judge-b y revisores | `openai-codex/gpt-6-luna` |
-| review-risk | `openai-codex/gpt-6.1-sol` |
+| review-risk | `openai-codex/gpt-6.2-sol` |
 
 La fuente de verdad es `~/.pi/gentle-ai/models.json` (lo que Pi aplica); `profiles.json` guarda los perfiles. Se cambia con `/gentle:profiles` dentro de Pi (desde gentle-pi 4.5; `/gentle:models` ya no existe), no editando los `.md` de agentes.
 
