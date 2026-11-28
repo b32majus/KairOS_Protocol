@@ -165,6 +165,14 @@ Perfil `go-sprint` de gentle-pi (activo desde el 20-11):
 
 La fuente de verdad es `~/.pi/gentle-ai/models.json` (lo que Pi aplica); `profiles.json` guarda los perfiles. Se cambia con `/gentle:profiles` dentro de Pi (desde gentle-pi 4.5; `/gentle:models` ya no existe), no editando los `.md` de agentes.
 
+Desde gentle-pi 5.1.0 / gentle-ai 5.1.0 (28-11):
+
+- **Modo `organic`** (por defecto). Full delegation (desde 4.7) no se usa: el orquestador ya es barato y el pensar fuerte va fuera de Pi; su propia medición da 3-4 veces el tiempo de organic en tareas pequeñas.
+- **Controlled Engineering activado** en `go-sprint` (`workflow` en `profiles.json`, tecla `c` en `/gentle:profiles`): worker, fix-agent y verify reciben reglas contra construir de más (cambio mínimo en la raíz, sin estados u opciones que nadie pidió, verificar en proporción, línea `Additions:` al cerrar).
+- **El aviso de RDD antes de entregar ya no bloquea**, solo informa. El control sigue siendo la auditoría de DIA.
+- Pi pregunta antes de tocar rutas fuera del worktree. Probado (28-11) con `pi -p`: escribe `encargos/<tarea>.ESTADO.md` sin pedir permiso. Si algún día se bloquea, que deje `ESTADO.md` dentro del worktree.
+- Tras actualizar gentle-pi o gentle-ai: `gentle-ai sync` y comprobar que `profiles.json` sigue igual (copia `.bak-<fecha>` antes).
+
 ## GGA
 
 GGA (el revisor de commits de gentle-ai) es **opcional**. Si se usa, su proveedor es `opencode:opencode-go/glm-5.3-flash`, nunca Claude.
